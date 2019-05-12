@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.view.View;
 import android.widget.TextView;
 
@@ -17,7 +18,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @BindView(R.id.mobile_number)TextView mmobile_numberTextView;
     @BindView(R.id.country_code)TextView mcountry_codeView;
     @BindView(R.id.appName)TextView mAppNameTextView;
-    @BindView(R.id.restaurant)TextView mRestaurant;
+    @BindView(R.id.restaurant)
+    CardView mRestaurant;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
