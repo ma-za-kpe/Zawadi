@@ -20,6 +20,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     TextView mwolcomeTextView;
     @BindView(R.id.emailTextView)
     TextView memailTextView;
+    @BindView(R.id.et_fragment_register_step_one_mobile)
+    TextView mMobile;
     @BindView(R.id.ccp)
     CountryCodePicker ccp;
 
@@ -40,8 +42,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         if(v == mLoginButton) {
 
+            String selected_country_code = ccp.getSelectedCountryCodeWithPlus();
+            String mobile = mMobile.getText().toString();
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-
+            intent.putExtra("selected_country_code", selected_country_code);
+            intent.putExtra("mobile", mobile);
             startActivity(intent);
         }else if (v == ccp){
 
