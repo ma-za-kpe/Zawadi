@@ -11,11 +11,22 @@ public class Splash extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+       runLauncher();
 
-        // Start home activity
-        startActivity(new Intent(Splash.this, LoginActivity.class));
-        // close splash activity
-        finish();
+    }
+
+    public void runLauncher() {
+
+        Handler h = new Handler();
+        h.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                // Start home activity
+                startActivity(new Intent(Splash.this, LoginActivity.class));
+                // close splash activity
+                finish();
+            }
+        }, 5000);
 
     }
 }

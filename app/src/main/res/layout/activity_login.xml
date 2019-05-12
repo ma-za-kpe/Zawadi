@@ -30,115 +30,90 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
-        android:text="Email"
+        android:text="You will get an SMS to confirm your number"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="@+id/wolcomeTextView"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="@+id/wolcomeTextView"
         app:layout_constraintTop_toBottomOf="@+id/wolcomeTextView" />
 
-    <EditText
-        android:id="@+id/emailEditText"
-        android:layout_width="211dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="32dp"
-        android:ems="10"
-        android:hint="jonhDoe@mail.com"
-        android:inputType="textEmailAddress"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="@+id/emailTextView"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="@+id/emailTextView"
-        app:layout_constraintTop_toBottomOf="@+id/emailTextView" />
-
-    <TextView
-        android:id="@+id/passwordTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="32dp"
-        android:text="Password"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="@+id/emailEditText"
-        app:layout_constraintStart_toStartOf="@+id/emailEditText"
-        app:layout_constraintTop_toBottomOf="@+id/emailEditText" />
-
-    <EditText
-        android:id="@+id/passwordEditText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:ems="10"
-        android:inputType="textPassword"
-        android:singleLine="true"
-        app:layout_constraintEnd_toEndOf="@+id/passwordTextView"
-        app:layout_constraintStart_toStartOf="@+id/passwordTextView"
-        app:layout_constraintTop_toBottomOf="@+id/passwordTextView" />
 
     <Button
         android:id="@+id/loginButton"
         style="@style/AppTheme.RoundedCornerMaterialButton"
         android:layout_width="148dp"
         android:layout_height="48dp"
-        android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="32dp"
         android:background="@drawable/rounded_shape"
         android:fontFamily="sans-serif"
-        android:text="login"
+        android:text="NEXT"
         android:textAlignment="center"
         android:textColor="@color/whiteColor"
         android:textSize="14sp"
         android:typeface="normal"
-        app:layout_constraintEnd_toEndOf="@+id/passwordEditText"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/passwordEditText"
-        app:layout_constraintTop_toBottomOf="@+id/passwordEditText" />
+        app:layout_constraintEnd_toEndOf="@+id/sign_in_button"
+        app:layout_constraintStart_toStartOf="@+id/sign_in_button"
+        app:layout_constraintTop_toBottomOf="@+id/sign_in_button" />
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="19dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="224dp"
         android:layout_marginEnd="32dp"
-        android:text="or"
+        android:text="or login with"
         android:textAlignment="center"
         android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="@+id/loginButton"
-        app:layout_constraintStart_toStartOf="@+id/loginButton"
-        app:layout_constraintTop_toBottomOf="@+id/loginButton" />
+        app:layout_constraintEnd_toEndOf="@+id/linearLayout"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/linearLayout"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
-    <Button
-        android:id="@+id/signUpButton"
-        android:layout_width="148dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="32dp"
-        android:background="@drawable/rounded_shape"
-        android:fontFamily="sans-serif"
-        android:text="SignUp"
-        android:textColor="@color/whiteColor"
-        android:textSize="14sp"
-        android:typeface="normal"
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/sign_in_button"
+        android:layout_width="166dp"
+        android:layout_height="44dp"
         app:layout_constraintEnd_toEndOf="@+id/textView2"
         app:layout_constraintStart_toStartOf="@+id/textView2"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
-    <com.google.android.gms.common.SignInButton
-        android:id="@+id/sign_in_button"
-        android:layout_width="170dp"
-        android:layout_height="50dp"
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="360dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
-        app:layout_constraintEnd_toEndOf="@+id/signUpButton"
-        app:layout_constraintHorizontal_bias="0.511"
-        app:layout_constraintStart_toStartOf="@+id/signUpButton"
-        app:layout_constraintTop_toBottomOf="@+id/signUpButton" />
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="@+id/emailTextView"
+        app:layout_constraintStart_toStartOf="@+id/emailTextView"
+        app:layout_constraintTop_toBottomOf="@+id/emailTextView">
+
+        <com.hbb20.CountryCodePicker
+            android:id="@+id/ccp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/whiteColor"
+            android:textSize="15sp"
+            tools:layout_editor_absoluteX="44dp"
+            tools:layout_editor_absoluteY="480dp" />
+
+
+        <EditText
+            android:id="@+id/et_fragment_register_step_one_mobile"
+            android:layout_width="195dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:ems="12"
+            android:gravity="center_vertical"
+            android:hint="Mobile No."
+            android:inputType="number"
+            android:textSize="15sp" />
+
+    </LinearLayout>
+
+
 </android.support.constraint.ConstraintLayout>
