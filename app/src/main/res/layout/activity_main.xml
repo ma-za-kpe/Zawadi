@@ -31,6 +31,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
+        android:layout_marginBottom="24dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="@+id/appName"
         app:layout_constraintHorizontal_bias="1.0"
@@ -62,29 +63,26 @@
 
     </LinearLayout>
 
-    <android.support.v7.widget.CardView
+    <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/restaurant"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="32dp"
-        android:padding="20dp"
-        app:layout_constraintEnd_toEndOf="@+id/appName"
-        app:layout_constraintStart_toStartOf="@+id/appName"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+        android:layout_width="300dp"
+        android:layout_height="164dp"
+        android:layout_gravity="center"
+        card_view:cardCornerRadius="4dp"
+        card_view:layout_constraintEnd_toEndOf="@+id/linearLayout2"
+        card_view:layout_constraintStart_toStartOf="@+id/linearLayout2"
+        card_view:layout_constraintTop_toBottomOf="@id/linearLayout2"
+        tools:layout_editor_absoluteY="106dp">
 
         <LinearLayout
+            android:id="@+id/linearLayout3"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
-            tools:layout_editor_absoluteX="64dp"
-            tools:layout_editor_absoluteY="186dp">
+            android:orientation="horizontal">
 
             <ImageView
-                android:id="@+id/resataurantImage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="150dp"
+                android:layout_height="match_parent"
                 android:src="@drawable/food" />
 
             <LinearLayout
@@ -94,10 +92,11 @@
 
                 <TextView
                     android:id="@+id/restaurants"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:paddingLeft="15dp"
+                    android:paddingTop="20dp"
                     android:text="Restaurants"
-                    android:textAlignment="center"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     tools:layout_editor_absoluteX="128dp"
@@ -105,22 +104,87 @@
 
                 <TextView
                     android:id="@+id/restaurantDescription"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:padding="20dp"
                     android:text="Food you love"
+                    android:textSize="18sp"
+                    android:textStyle="italic"
                     tools:layout_editor_absoluteX="128dp"
                     tools:layout_editor_absoluteY="422dp" />
 
             </LinearLayout>
 
-            <ImageView
-                android:id="@+id/arrow"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/arrow" />
-
         </LinearLayout>
 
     </android.support.v7.widget.CardView>
+
+    <RelativeLayout
+        android:layout_width="371dp"
+        android:layout_height="375dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="51dp"
+        android:layout_marginEnd="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/restaurant"
+        tools:context=".ProfileActivity">
+
+        <ImageView
+            android:id="@+id/profile_image"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="134dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="134dp"
+            android:layout_marginBottom="20dp" />
+
+        <TextView
+            android:id="@+id/profile_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/profile_image"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="160dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="160dp"
+            android:layout_marginBottom="10dp"
+            android:textSize="16sp"
+            tools:text="Irshad Kumail" />
+
+        <TextView
+            android:id="@+id/profile_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/profile_text"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="130dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="129dp"
+            android:layout_marginBottom="10dp"
+            android:textSize="14sp"
+            tools:text="irshadkumail@gmail.com" />
+
+        <Button
+            android:id="@+id/sign_out"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/profile_email"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="139dp"
+            android:layout_marginTop="70dp"
+            android:layout_marginEnd="139dp"
+            android:layout_marginBottom="50dp"
+            android:text="SIGN OUT" />
+
+    </RelativeLayout>
+
 
 </android.support.constraint.ConstraintLayout>
