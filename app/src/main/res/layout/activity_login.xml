@@ -43,37 +43,42 @@
         style="@style/AppTheme.RoundedCornerMaterialButton"
         android:layout_width="148dp"
         android:layout_height="48dp"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
         android:background="@drawable/rounded_shape"
         android:fontFamily="sans-serif"
-        android:text="NEXT"
+        android:text="Login"
         android:textAlignment="center"
         android:textColor="@color/whiteColor"
         android:textSize="14sp"
         android:typeface="normal"
-        app:layout_constraintEnd_toEndOf="@+id/sign_in_button"
-        app:layout_constraintStart_toStartOf="@+id/sign_in_button"
-        app:layout_constraintTop_toBottomOf="@+id/sign_in_button" />
+        app:layout_constraintEnd_toEndOf="@+id/linearLayout"
+        app:layout_constraintStart_toStartOf="@+id/linearLayout"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="0dp"
-        android:layout_height="19dp"
+        android:layout_width="175dp"
+        android:layout_height="28dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="224dp"
+        android:layout_marginTop="92dp"
         android:layout_marginEnd="32dp"
         android:text="or login with"
         android:textAlignment="center"
         android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="@+id/linearLayout"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/linearLayout"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+        app:layout_constraintEnd_toEndOf="@+id/loginButton"
+        app:layout_constraintHorizontal_bias="0.351"
+        app:layout_constraintStart_toStartOf="@+id/loginButton"
+        app:layout_constraintTop_toBottomOf="@+id/loginButton" />
 
     <com.google.android.gms.common.SignInButton
         android:id="@+id/sign_in_button"
         android:layout_width="166dp"
         android:layout_height="44dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
         app:layout_constraintEnd_toEndOf="@+id/textView2"
         app:layout_constraintStart_toStartOf="@+id/textView2"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
