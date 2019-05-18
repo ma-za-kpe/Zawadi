@@ -109,6 +109,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
             String selected_country_code = ccp.getSelectedCountryCodeWithPlus();
             String mobile = mMobile.getText().toString();
+
+            //check weather number is not null
+            if(mobile.isEmpty() || mobile.length() < 9){
+                Toast.makeText(LoginActivity.this, "Enter a valid mobile", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             intent.putExtra("selected_country_code", selected_country_code);
             intent.putExtra("mobile", mobile);
