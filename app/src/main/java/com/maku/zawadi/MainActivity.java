@@ -47,8 +47,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public  static  final String TAG = MainActivity.class.getSimpleName();
 
-    @BindView(R.id.mobile_number)TextView mmobile_numberTextView;
-    @BindView(R.id.country_code)TextView mcountry_codeView;
     @BindView(R.id.appName)TextView mAppNameTextView;
     @BindView(R.id.restaurant)
     CardView mRestaurant;
@@ -61,8 +59,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @BindView(R.id.profile_email) TextView profileEmail;
     @BindView(R.id.profile_image) ImageView profileImage;
     @BindView(R.id.sign_out) Button signOut;
-    @BindView(R.id.editTextCode) EditText editTextCode;
-    @BindView(R.id.btnVerify) Button btnVerify;
+
 
     private GoogleSignInClient googleSignInClient;
     //It is the verification id that will be sent to the user
@@ -79,18 +76,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mAppNameTextView.setTypeface(kushanScriptRegular);
 
         Intent intent = getIntent();
-        String selected_country_code = intent.getStringExtra("selected_country_code");
-        String mobile = intent.getStringExtra("mobile");
         String email = intent.getStringExtra("email");
         String photo = intent.getStringExtra("photo");
         String name = intent.getStringExtra("name");
-        mcountry_codeView.setText( selected_country_code);
-        mmobile_numberTextView.setText(mobile);
         profileName.setText(name);
         profileEmail.setText(email);
-        String fullNumber = selected_country_code+mobile;
-        Log .d(TAG, "Test user mobile " + fullNumber);
-
         Log .d(TAG, "Test user photo " + photo);
 
         Picasso.get()
@@ -98,10 +88,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .into(profileImage);
 
         mRestaurant.setOnClickListener(this);
-        btnVerify.setOnClickListener(this);
-
-        //if the automatic sms detection worked,
-        sendVerificationCode(fullNumber);
 
 //        GoogleSignInAccount googleSignInAccount = getIntent().getParcelableExtra(GOOGLE_ACCOUNT);
 //        Picasso.get().load(googleSignInAccount.getPhotoUrl().toString()).centerInside().fit().into(profileImage);
@@ -144,110 +130,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } else if(v == signOut){
 
             UserSignOutFunction();
-        } else if(v == btnVerify){
-            //if the automatic sms detection did not work, user can also enter the code manually
-            //so adding a click listener to the button
-            String code = editTextCode.getText().toString().trim();
-            if (code.isEmpty() || code.length() < 6) {
-                editTextCode.setError("Enter valid code");
-                editTextCode.requestFocus();
-                return;
-            }
-
-            //verifying the code entered manually
-            verifyVerificationCode(code);
-
         }
 
     }
 
-    //firebase phone authentication
-
-
-
-    private void sendVerificationCode(String mobile) {
-        PhoneAuthProvider.getInstance().verifyPhoneNumber(
-                 mobile,
-                60,
-                TimeUnit.SECONDS,
-                TaskExecutors.MAIN_THREAD,
-                mCallbacks);
-    }
-
-    //the callback to detect the verification status
-    private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
-        @Override
-        public void onVerificationCompleted(PhoneAuthCredential phoneAuthCredential) {
-
-            //Getting the code sent by SMS
-            String code = phoneAuthCredential.getSmsCode();
-
-            //sometime the code is not detected automatically
-            //in this case the code will be null
-            //so user has to manually enter the code
-            if (code != null) {
-                editTextCode.setText(code);
-                //verifying the code
-                verifyVerificationCode(code);
-            }
-        }
-
-        @Override
-        public void onVerificationFailed(FirebaseException e) {
-            Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
-        }
-        @Override
-        public void onCodeSent(String s, PhoneAuthProvider.ForceResendingToken forceResendingToken) {
-            super.onCodeSent(s, forceResendingToken);
-
-            //storing the verification id that is sent to the user
-            mVerificationId = s;
-        }
-    };
-
-
-    private void verifyVerificationCode(String code) {
-        //creating the credential
-        PhoneAuthCredential credential = PhoneAuthProvider.getCredential(mVerificationId, code);
-
-        //signing the user
-        signInWithPhoneAuthCredential(credential);
-    }
-
-    private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
-        mAuth.signInWithCredential(credential)
-                .addOnCompleteListener(MainActivity.this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            //verification successful we will start the profile activity
-//                            Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
-//                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                            startActivity(intent);
-
-                        } else {
-
-                            //verification unsuccessful.. display an error message
-
-                            String message = "Somthing is wrong, we will fix it soon...";
-
-                            if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
-                                message = "Invalid code entered...";
-                            }
-                            Snackbar snackbar = Snackbar.make(findViewById(R.id.parent), message, Snackbar.LENGTH_LONG);
-                            snackbar.setAction("Dismiss", new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-
-                                }
-                            });
-                            snackbar.show();
-                        }
-                    }
-                });
-    }
-
-                            //google firebase signin
+    //google firebase signin
 
     public void UserSignOutFunction() {
 

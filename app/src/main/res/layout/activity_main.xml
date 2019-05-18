@@ -24,64 +24,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="0dp"
-        android:layout_height="36dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="24dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="@+id/appName"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/appName"
-        app:layout_constraintTop_toBottomOf="@+id/appName">
-
-        <TextView
-            android:id="@+id/phone_number"
-            android:layout_width="wrap_content"
-            android:layout_height="41dp"
-            android:text="Number : "
-            tools:layout_editor_absoluteX="128dp"
-            tools:layout_editor_absoluteY="218dp" />
-
-        <TextView
-            android:id="@+id/country_code"
-            android:layout_width="wrap_content"
-            android:layout_height="41dp"
-            tools:layout_editor_absoluteX="128dp"
-            tools:layout_editor_absoluteY="218dp" />
-
-
-        <TextView
-            android:id="@+id/mobile_number"
-            android:layout_width="wrap_content"
-            android:layout_height="41dp"
-            tools:layout_editor_absoluteX="128dp"
-            tools:layout_editor_absoluteY="422dp" />
-        <EditText
-            android:id="@+id/editTextCode"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <Button
-            android:id="@+id/btnVerify"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="verify"/>
-
-    </LinearLayout>
 
     <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/restaurant"
         android:layout_width="300dp"
         android:layout_height="164dp"
         android:layout_gravity="center"
+        android:layout_marginTop="70dp"
+        android:layout_marginEnd="8dp"
         card_view:cardCornerRadius="4dp"
-        card_view:layout_constraintEnd_toEndOf="@+id/linearLayout2"
+        card_view:layout_constraintEnd_toEndOf="@+id/appName"
         card_view:layout_constraintStart_toStartOf="@+id/linearLayout2"
-        card_view:layout_constraintTop_toBottomOf="@id/linearLayout2"
-        tools:layout_editor_absoluteY="106dp">
+        card_view:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:id="@+id/linearLayout3"

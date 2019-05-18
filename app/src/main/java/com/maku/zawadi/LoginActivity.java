@@ -116,7 +116,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 return;
             }
 
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            Intent intent = new Intent(LoginActivity.this, VerifyPhoneActivity.class);
             intent.putExtra("selected_country_code", selected_country_code);
             intent.putExtra("mobile", mobile);
             startActivity(intent);
