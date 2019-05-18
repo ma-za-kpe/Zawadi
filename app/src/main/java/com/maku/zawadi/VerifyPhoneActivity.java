@@ -1,8 +1,11 @@
 package com.maku.zawadi;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +26,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.maku.zawadi.constants.Constants;
+import com.squareup.picasso.Picasso;
 
 import java.util.concurrent.TimeUnit;
 
@@ -31,6 +37,8 @@ import butterknife.ButterKnife;
 public class VerifyPhoneActivity extends AppCompatActivity  implements View.OnClickListener {
 
     public  static  final String TAG = VerifyPhoneActivity.class.getSimpleName();
+    private SharedPreferences mSharedPreferences;
+    private SharedPreferences.Editor mEditor;
 
     //It is the verification id that will be sent to the user
     private String mVerificationId;
@@ -54,6 +62,10 @@ public class VerifyPhoneActivity extends AppCompatActivity  implements View.OnCl
 
         ButterKnife.bind(this);
 
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        mEditor = mSharedPreferences.edit();
+
+
         Intent intent = getIntent();
         String selected_country_code = intent.getStringExtra("selected_country_code");
         String mobile = intent.getStringExtra("mobile");
@@ -66,8 +78,11 @@ public class VerifyPhoneActivity extends AppCompatActivity  implements View.OnCl
         //if the automatic sms detection worked,
         sendVerificationCode(fullNumber);
         btnVerify.setOnClickListener(this);
+        addToSharedPreferences(fullNumber);
+    }
 
-
+    private void addToSharedPreferences(String fullNumber) {
+        mEditor.putString(Constants.PREFERENCES_ID_PHONE_NUMBER, fullNumber).apply();
     }
 
     @Override

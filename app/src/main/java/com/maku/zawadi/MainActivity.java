@@ -1,11 +1,14 @@
 package com.maku.zawadi;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Typeface;
 import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -41,6 +44,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.hbb20.CountryCodePicker;
+import com.maku.zawadi.constants.Constants;
 import com.squareup.picasso.Picasso;
 
 import java.util.concurrent.TimeUnit;
@@ -51,6 +55,10 @@ import butterknife.ButterKnife;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     public  static  final String TAG = MainActivity.class.getSimpleName();
+    private SharedPreferences mSharedPreferences;
+    private String mEmail;
+    private String mPhoto;
+    private String mPhoneNumber;
 
     @BindView(R.id.restaurant)
     CardView mRestaurant;
@@ -77,6 +85,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         ButterKnife.bind(this);
+
+
 
         setSupportActionBar(toolbar);
 
@@ -141,8 +151,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         // initialize auth
         mAuth = FirebaseAuth.getInstance();
-
         signOut.setOnClickListener(this);
+
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        mEmail = mSharedPreferences.getString(Constants.PREFERENCES_EMAIL_KEY, null);
+        mPhoto = mSharedPreferences.getString(Constants.PREFERENCES_PHOTO_KEY, null);
+        mPhoneNumber = mSharedPreferences.getString(Constants.PREFERENCES_ID_PHONE_NUMBER, null);
+
+        Toast.makeText(MainActivity.this, "number " + mPhoneNumber,
+                Toast.LENGTH_SHORT).show();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        View header = navigationView.getHeaderView(0);
+        //email
+        TextView Email = (TextView) header.findViewById(R.id.nav_header_textView);
+        Email.setText("Email " + mEmail);
+
+        //photo
+        ImageView imageView = (ImageView) header.findViewById(R.id.nav_header_imageView);
+        Picasso.get()
+                .load(mPhoto)
+                .into(imageView);
+
+        //number
+        TextView Number = (TextView) header.findViewById(R.id.nav_header_phone);
+        Number.setText("Phone Number " + mPhoneNumber);
 
 
     }

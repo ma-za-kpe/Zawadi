@@ -2,6 +2,8 @@ package com.maku.zawadi;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -30,6 +32,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.hbb20.CountryCodePicker;
+import com.maku.zawadi.constants.Constants;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -40,6 +43,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private GoogleApiClient mGoogleApiClient;
     private static final int RC_SIGN_IN = 9001;
     private FirebaseAuth mAuth;
+
+    private SharedPreferences mSharedPreferences;
+    private SharedPreferences.Editor mEditor;
 
 
     @BindView(R.id.loginButton) Button mLoginButton;
@@ -62,6 +68,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_login);
 
         ButterKnife.bind(this);
+
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        mEditor = mSharedPreferences.edit();
 
         //first we intialized the FirebaseAuth object
         mAuth = FirebaseAuth.getInstance();
@@ -183,6 +192,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 Log .d(TAG, "photo "+ user.getPhotoUrl().toString());
                             }
 
+                            String name = user.getDisplayName();
+                            String email = user.getEmail();
+                            String photo = user.getPhotoUrl().toString();
+
+                            addToSharedPreferences(name, email, photo);
                             Toast.makeText(LoginActivity.this, "User Signed In" + user, Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                             intent.putExtra("email", user.getEmail());
@@ -202,6 +216,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     }
                 });
 
+    }
+
+    private void addToSharedPreferences(String name, String email, String photo) {
+        mEditor.putString(Constants.PREFERENCES_NAME_KEY, name).apply();
+        mEditor.putString(Constants.PREFERENCES_EMAIL_KEY, email).apply();
+        mEditor.putString(Constants.PREFERENCES_PHOTO_KEY, photo).apply();
     }
 
     private void signIn() {
