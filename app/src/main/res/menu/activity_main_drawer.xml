@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group>
+        <item android:id="@+id/nav_item_one"
+            android:icon="@drawable/ic_action_business_center"
+            android:title="VENDORS" />
+        <item android:id="@+id/nav_item_two"
+            android:icon="@drawable/ic_action_card_giftcard"
+            android:title="GIFTS" />
+        <item android:id="@+id/nav_item_three"
+            android:icon="@drawable/ic_action_add_shopping_cart"
+            android:title="CART" />
+    </group>
+
+    <item android:title="SETTINGS"
+        android:icon="@drawable/ic_action_settings"
+        >
+        <menu>
+            <item android:id="@+id/nav_item_six"
+                android:icon="@drawable/ic_action_local_phone"
+                android:title="PHONE NUMBER" />
+            <item android:id="@+id/nav_item_seven"
+                android:icon="@drawable/ic_action_arrow_back"
+                android:title="SIGN OUT" />
+        </menu>
+    </item>
+</menu>
