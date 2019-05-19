@@ -6,13 +6,27 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <!--
+         The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
+         Google Maps Android API v2, but you must specify either coarse or fine
+         location permissions for the 'MyLocation' functionality.
+    -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <application
         android:allowBackup="true"
+        android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".VerifyPhoneActivity"></activity>
         <activity
             android:name=".Splash"
             android:theme="@style/SplashTheme">
@@ -22,15 +36,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity"></activity>
-        <activity
-            android:name=".MainActivity"
-            android:theme="@style/NoActionBarTheme">
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".MainActivity"
+            android:theme="@style/NoActionBarTheme" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.maku.zawadi.MainActivity"></meta-data>
+                android:value="com.maku.zawadi.MainActivity" />
         </activity>
-        <activity android:name=".RestaurantsActivity"></activity>
+        <activity android:name=".RestaurantsActivity" />
     </application>
 
 </manifest>
