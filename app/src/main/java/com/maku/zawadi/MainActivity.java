@@ -10,6 +10,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -19,9 +20,11 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,7 +55,9 @@ import java.util.concurrent.TimeUnit;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
+
+    private String[] vendors = new String[] {"Restaurants", "Bars", "Pharmacy"};
 
     public  static  final String TAG = MainActivity.class.getSimpleName();
     private SharedPreferences mSharedPreferences;
@@ -67,10 +72,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private GoogleSignInClient mGoogleSignInClient;
 
     public static final String GOOGLE_ACCOUNT = "google_account";
-     @BindView(R.id.profile_text) TextView profileName ;
-    @BindView(R.id.profile_email) TextView profileEmail;
-    @BindView(R.id.profile_image) ImageView profileImage;
-    @BindView(R.id.sign_out) Button signOut;
+//     @BindView(R.id.profile_text) TextView profileName ;
+//    @BindView(R.id.profile_email) TextView profileEmail;
+//    @BindView(R.id.profile_image) ImageView profileImage;
 
     private ActionBarDrawerToggle mDrawerToggle;
     private String mActivityTitle;
@@ -116,13 +120,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String email = intent.getStringExtra("email");
         String photo = intent.getStringExtra("photo");
         String name = intent.getStringExtra("name");
-        profileName.setText(name);
-        profileEmail.setText(email);
-        Log .d(TAG, "Test user photo " + photo);
-
-        Picasso.get()
-                .load(photo)
-                .into(profileImage);
+//        profileName.setText(name);
+//        profileEmail.setText(email);
+//        Log .d(TAG, "Test user photo " + photo);
+//
+//        Picasso.get()
+//                .load(photo)
+//                .into(profileImage);
 
         mRestaurant.setOnClickListener(this);
 
@@ -151,15 +155,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         // initialize auth
         mAuth = FirebaseAuth.getInstance();
-        signOut.setOnClickListener(this);
 
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         mEmail = mSharedPreferences.getString(Constants.PREFERENCES_EMAIL_KEY, null);
         mPhoto = mSharedPreferences.getString(Constants.PREFERENCES_PHOTO_KEY, null);
         mPhoneNumber = mSharedPreferences.getString(Constants.PREFERENCES_ID_PHONE_NUMBER, null);
 
-        Toast.makeText(MainActivity.this, "number " + mPhoneNumber,
-                Toast.LENGTH_SHORT).show();
+//        Toast.makeText(MainActivity.this, "number " + mPhoneNumber,
+//                Toast.LENGTH_SHORT).show();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         View header = navigationView.getHeaderView(0);
@@ -177,6 +180,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         TextView Number = (TextView) header.findViewById(R.id.nav_header_phone);
         Number.setText("Phone Number " + mPhoneNumber);
 
+        setNavigationViewListener();
 
     }
 
@@ -187,9 +191,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             Intent intent = new Intent(MainActivity.this, RestaurantsActivity.class);
             startActivity(intent);
-        } else if(v == signOut){
-
-            UserSignOutFunction();
         }
 
     }
@@ -262,4 +263,42 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
 
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        // Handle navigation view item clicks here.
+        switch (menuItem.getItemId()) {
+
+            case R.id.nav_item_one : {
+                Toast.makeText(MainActivity.this, "ALL VENDORS",
+                        Toast.LENGTH_SHORT).show();
+                break;
+            }case R.id.nav_item_two : {
+                Toast.makeText(MainActivity.this, "YOU HAVE SELECTED GIFTS",
+                        Toast.LENGTH_SHORT).show();
+                break;
+            }case R.id.nav_item_three : {
+                Toast.makeText(MainActivity.this, "YOU HAVE SELECTED CART",
+                        Toast.LENGTH_SHORT).show();
+                break;
+            }case R.id.nav_item_four : {
+                Toast.makeText(MainActivity.this,  mPhoneNumber,
+                        Toast.LENGTH_SHORT).show();
+                UserSignOutFunction();
+                break;
+            } case R.id.nav_item_five : {
+                UserSignOutFunction();
+                break;
+            } default:
+                return super.onOptionsItemSelected(menuItem);
+        }
+        //close navigation drawer
+        drawerLayout.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
+    //method to set Listener
+    private void setNavigationViewListener() {
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+    }
 }
