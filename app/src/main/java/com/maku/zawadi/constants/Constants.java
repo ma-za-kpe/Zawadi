@@ -1,7 +1,12 @@
 package com.maku.zawadi.constants;
 
-public class Constants {
+import com.maku.zawadi.BuildConfig;
 
+public class Constants {
+    //GOOGLE MAPS API SETTINGS
+    public static final String Google_api = BuildConfig.googlePlacesapikey;
+
+    //SHARED PREFENCES
     public static final String PREFERENCES_EMAIL_KEY = "email";
     public static final String PREFERENCES_NAME_KEY = "name";
     public static final String PREFERENCES_PHOTO_KEY = "photo";

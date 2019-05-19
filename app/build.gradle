@@ -21,6 +21,11 @@ android {
             includeAndroidResources = true
         }
     }
+
+
+    buildTypes.each {
+        it.buildConfigField 'String', 'googlePlacesapikey', googlePlacesapikey
+    }
 }
 
 dependencies {
