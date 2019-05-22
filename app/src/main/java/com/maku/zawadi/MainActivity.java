@@ -16,6 +16,8 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
@@ -50,6 +52,7 @@ import com.hbb20.CountryCodePicker;
 import com.maku.zawadi.constants.Constants;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
@@ -57,24 +60,16 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
 
-    private String[] vendors = new String[] {"Restaurants", "Bars", "Pharmacy"};
-
     public  static  final String TAG = MainActivity.class.getSimpleName();
     private SharedPreferences mSharedPreferences;
     private String mEmail;
     private String mPhoto;
     private String mPhoneNumber;
-
-    @BindView(R.id.restaurant)
-    CardView mRestaurant;
     private FirebaseAuth mAuth;
     private GoogleApiClient mGoogleApiClient;
     private GoogleSignInClient mGoogleSignInClient;
 
     public static final String GOOGLE_ACCOUNT = "google_account";
-//     @BindView(R.id.profile_text) TextView profileName ;
-//    @BindView(R.id.profile_email) TextView profileEmail;
-//    @BindView(R.id.profile_image) ImageView profileImage;
 
     private ActionBarDrawerToggle mDrawerToggle;
     private String mActivityTitle;
@@ -82,6 +77,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @BindView(R.id.drawer_layout) DrawerLayout drawerLayout;
     @BindView(R.id.toolbar_main) Toolbar toolbar;
 
+    //Arraylist of categories
+    ArrayList<String> mCategories;
+    @BindView(R.id.catRecycler) RecyclerView recyclerView;
+    RecyclerView.LayoutManager layoutManager;
+    RecyclerView.Adapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,8 +89,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         ButterKnife.bind(this);
-
-
 
         setSupportActionBar(toolbar);
 
@@ -116,24 +114,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         Typeface kushanScriptRegular = Typeface.createFromAsset(getAssets(), "fonts/kaushanscriptregular.otf");
 
+        //ArrayList
+        mCategories = new ArrayList<String>();
+        mCategories.add("RESTAURANTS");
+        mCategories.add("BARS");
+        mCategories.add("SUPERMAKETS");
+
+        recyclerView.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(this);
+        adapter = new MainAdapter(mCategories);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(layoutManager);
+
         Intent intent = getIntent();
         String email = intent.getStringExtra("email");
         String photo = intent.getStringExtra("photo");
         String name = intent.getStringExtra("name");
-//        profileName.setText(name);
-//        profileEmail.setText(email);
-//        Log .d(TAG, "Test user photo " + photo);
-//
-//        Picasso.get()
-//                .load(photo)
-//                .into(profileImage);
-
-        mRestaurant.setOnClickListener(this);
-
-//        GoogleSignInAccount googleSignInAccount = getIntent().getParcelableExtra(GOOGLE_ACCOUNT);
-//        Picasso.get().load(googleSignInAccount.getPhotoUrl().toString()).centerInside().fit().into(profileImage);
-//        profileName.setText(googleSignInAccount.getDisplayName());
-//        profileEmail.setText(googleSignInAccount.getEmail());
 
 
         // GoogleSignInOptions 개체 구성
@@ -187,11 +183,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
 
-        if(v == mRestaurant) {
-
-            Intent intent = new Intent(MainActivity.this, RestaurantsActivity.class);
-            startActivity(intent);
-        }
+//        if(v == mRestaurant) {
+//
+//            Intent intent = new Intent(MainActivity.this, RestaurantsActivity.class);
+//            startActivity(intent);
+//        }
 
     }
 

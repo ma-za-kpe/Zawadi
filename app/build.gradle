@@ -38,6 +38,7 @@ dependencies {
     implementation 'com.hbb20:ccp:2.2.3'
     implementation 'com.google.android.gms:play-services-auth:16.0.1'
     implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation 'com.google.firebase:firebase-database:16.0.4'
     testImplementation 'junit:junit:4.12'
     testImplementation "org.robolectric:robolectric:4.2"
     implementation 'com.jakewharton:butterknife:8.8.1'
