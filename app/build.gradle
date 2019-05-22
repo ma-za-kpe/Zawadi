@@ -67,6 +67,15 @@ dependencies {
 
     implementation 'com.android.support:recyclerview-v7:+'
 
+    //location
+    implementation 'com.google.android.gms:play-services-location:10.2.0'
+
+//Retrofit networking api
+    implementation "com.squareup.retrofit2:retrofit:2.1.0"
+    implementation "com.squareup.retrofit2:converter-gson:2.1.0"
+    implementation 'com.squareup.okhttp:okhttp:2.4.0'
+    implementation "com.squareup.okhttp3:logging-interceptor:3.4.1"
+
 }
 
 apply plugin: 'com.google.gms.google-services'
