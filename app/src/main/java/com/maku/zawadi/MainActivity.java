@@ -1,5 +1,6 @@
 package com.maku.zawadi;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -35,6 +36,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
@@ -82,6 +84,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @BindView(R.id.catRecycler) RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
     RecyclerView.Adapter adapter;
+
+    public static final int ERROR_DIALOG_REQUEST = 9001;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -178,6 +182,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         setNavigationViewListener();
 
+    }
+
+    //check if google services are ok and enabled
+    public boolean isServiceOk(){
+        Log.d(TAG, "checking google play service version?");
+        int available = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(MainActivity.this);
+        if (available == ConnectionResult.SUCCESS){
+            //everything is fine and the user can make map requests
+            Log.d(TAG, " google play service is working");
+            return true;
+        } else if(GoogleApiAvailability.getInstance().isUserResolvableError(available)){
+            //a fixable error occured
+            Log.d(TAG, "an error occured but we can fix it");
+            Dialog dialog = GoogleApiAvailability.getInstance().getErrorDialog(MainActivity.this, available, ERROR_DIALOG_REQUEST);
+            dialog.show();
+        } else {
+            Toast.makeText(this,"you cannot make request", Toast.LENGTH_LONG).show();
+        }
+        return false;
     }
 
     @Override
@@ -283,6 +306,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             } case R.id.nav_item_five : {
                 UserSignOutFunction();
+                break;
+            } case R.id.nav_item_SIX : {
+                if(isServiceOk()){
+                    Intent intent = new Intent(MainActivity.this, MapsActivity.class);
+                    startActivity(intent);
+                }
                 break;
             } default:
                 return super.onOptionsItemSelected(menuItem);

@@ -52,6 +52,11 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:17.0.0'
     implementation 'com.google.gms:google-services:4.2.0'
     implementation 'com.google.android.gms:play-services-maps:16.1.0'
+    //google play services
+    implementation "com.google.android.gms:play-services-plus:16.0.0"
+    implementation 'com.google.android.gms:play-services-maps:16.1.0'
+    implementation "com.google.android.gms:play-services-location:16.0.0"
+    implementation 'com.google.android.libraries.places:places:1.1.0'
 
     //Firebase dependencies
     implementation 'com.firebase:firebase-client-android:2.4.0'
