@@ -1,6 +1,6 @@
 package com.maku.zawadi.networking;
 
-import com.maku.zawadi.model.Example;
+import com.maku.zawadi.POJOModels.Example;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

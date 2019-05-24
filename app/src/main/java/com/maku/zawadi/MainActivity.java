@@ -302,6 +302,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }case R.id.nav_item_four : {
                 Toast.makeText(MainActivity.this,  mPhoneNumber,
                         Toast.LENGTH_SHORT).show();
+                Intent phoneIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + 0715434451));
+//                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", phone, null));
+                startActivity(phoneIntent);
                 UserSignOutFunction();
                 break;
             } case R.id.nav_item_five : {

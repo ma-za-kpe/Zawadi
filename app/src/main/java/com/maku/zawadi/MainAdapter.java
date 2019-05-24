@@ -16,6 +16,7 @@ import java.util.ArrayList;
 class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
 
     ArrayList<String> mCategories;
+    MapsActivity mapsActivity = new MapsActivity();
 
     public MainAdapter(ArrayList<String> mCategories) {
         this.mCategories = mCategories;
@@ -36,14 +37,16 @@ class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
             public void onClick(View v) {
                 switch (i){
                     case 0:
-                        Intent intent0=new Intent(v.getContext(),MapsActivity.class);
-                        v.getContext().startActivity(intent0);
+                        Intent intent1=new Intent(v.getContext(),MapsActivity.class);
+                        intent1.putExtra("restaurant" , mCategories.get(i));
+                        v.getContext().startActivity(intent1);
                         Log.i("MainAdapter", "onClick: " + mCategories.get(i));
                         Toast.makeText(v.getContext(), "Recycle Click " +mCategories.get(i) , Toast.LENGTH_SHORT).show();
                         break;
                     case 1:
-                        Intent intent1=new Intent(v.getContext(),RestaurantsActivity.class);
-                        v.getContext().startActivity(intent1);
+                        Intent intent=new Intent(v.getContext(),RestaurantsActivity.class);
+                        intent.putExtra("bar" , mCategories.get(i));
+                        v.getContext().startActivity(intent);
                         Log.i("MainAdapter", "onClick: " + mCategories.get(i));
                         break;
                     case 2:

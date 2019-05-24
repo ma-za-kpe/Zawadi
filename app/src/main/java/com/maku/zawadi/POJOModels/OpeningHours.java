@@ -1,4 +1,4 @@
-package com.maku.zawadi.model;
+package com.maku.zawadi.POJOModels;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

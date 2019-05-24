@@ -9,9 +9,12 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -31,17 +34,24 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.maku.zawadi.model.Example;
-import com.maku.zawadi.model.NearByApiResponse;
+import com.maku.zawadi.POJOModels.Example;
+import com.maku.zawadi.POJOModels.Result;
+import com.maku.zawadi.adapter.RestaurantListAdapter;
+import com.maku.zawadi.model.Restaurant;
 import com.maku.zawadi.networking.NearByApi;
 
+import java.util.ArrayList;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,
+        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener, View.OnClickListener {
 
     public static final String TAG = "MapsActivity";
 
@@ -64,21 +74,30 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Boolean mLocationPermissionGranted = false;
 
     //places
-    private GoogleMap googleMap;
     private Button btnRestorentFind, btnHospitalFind;
     private LocationRequest mLocationRequest;
     private Location location;
     private int PROXIMITY_RADIUS = 8000;
 
+    //arraylist
+    ArrayList<Restaurant> newRestaurant;
+    @BindView(R.id.re) RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d(TAG, "onCreate: on create ...");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+
+        ButterKnife.bind(this);
+
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         btnRestorentFind = (Button) findViewById(R.id.rest);
         //location permissions
         getLocationPermission();
+
     }
 
     //contains your lat and lon
@@ -216,6 +235,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     public void findPlaces(String placeType) {
+
         Log.d(TAG, "findPlaces: place..." + placeType);
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -244,8 +264,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             call.enqueue(new Callback<Example>() {
                 @Override
-                public void onResponse(Call<Example> call, Response<Example> response) {
+                public void onResponse(Call<Example> call, final Response<Example> response) {
+                    final ArrayList<Restaurant> restaurants = new ArrayList<>();
+
                     try {
+
                         mMap.clear();
                         // This loop will go through all the results and add marker on each location.
                         for (int i = 0; i < response.body().getResults().size(); i++) {
@@ -254,8 +277,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             String placeName = response.body().getResults().get(i).getName();
                             String vicinity = response.body().getResults().get(i).getVicinity();
 
-                            Log.d(TAG, "findPlaces: URL..." + placeName);
-                            Log.d(TAG, "findPlaces: URL..." + vicinity);
+                            final Restaurant restaurant = new Restaurant(placeName);
+                            restaurants.add(restaurant);
+
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {//update your views here
+                                    Log.d(TAG, "run: updating text view");
+
+                                    ArrayList<Result> rest = (ArrayList<Result>) response.body().getResults();
+                                    recyclerView.setAdapter(new RestaurantListAdapter(rest));
+
+                                    Log.d(TAG, "Number of movies received: " + rest.size());
+
+                                }
+                            });
+
+                            Log.d(TAG, "findPlaces: name..." +  restaurant.getName());
+                            Log.d(TAG, "findPlaces: vicinity..." + vicinity);
 
                             MarkerOptions markerOptions = new MarkerOptions();
                             LatLng latLng = new LatLng(lat, lng);
@@ -270,7 +309,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             // move map camera
                             mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
                             mMap.animateCamera(CameraUpdateFactory.zoomTo(13));
+//                            Log.d(TAG, "onResponse: arraylist " + restaurants.get(i).getName());
+
                         }
+                        display(restaurants);
+
                     } catch (Exception e) {
                         Log.d("onResponse", "There is an error");
                         e.printStackTrace();
@@ -293,6 +336,22 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
+    public void display(ArrayList<Restaurant> al) {
+        Log.d(TAG, "display: ");
+        newRestaurant = new ArrayList<>();
+        for (int i = 0; i < al.size(); i++) {
+//            Log.d(TAG, "display: arrayList" + al.get(i));
+            newRestaurant.add(al.get(i));
+        }
+        Log.d(TAG, "display:New restaurant arrayList" + newRestaurant);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d(TAG, "onStart: oon start activity");
+    }
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
         Toast.makeText(this, "map is ready", Toast.LENGTH_LONG).show();
@@ -312,15 +371,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         }
 
-        btnRestorentFind.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                findPlaces("restaurant");
-            }
-        });
+        btnRestorentFind.setOnClickListener(this);
 //        LatLng nairobi = new LatLng(-1.28333, 36.81667);
 //        mMap.addMarker(new MarkerOptions().position(nairobi).title("Marker in Nairobi"));
 //        mMap.moveCamera(CameraUpdateFactory.newLatLng(nairobi));
+    }
+
+    @Override
+    public void onClick(View v) {
+        findPlaces("restaurant");
+//
+//        Intent intent1=new Intent(MapsActivity.this, RestaurantsActivity.class);
+//        startActivity(intent1);
     }
 
     @Override
@@ -354,16 +416,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onLocationChanged(Location location) {
         Log.d(TAG, "onLocationChanged: onLocationChanged");
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
         if(location!=null){
-            this.location = location;
-            if(!btnHospitalFind.isEnabled()){
-                LatLng latLng = new LatLng(location.getLatitude(),location.getLongitude());
-                googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-                googleMap.animateCamera(CameraUpdateFactory.zoomTo(15));
+            this.location =  LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+            LatLng latLng = new LatLng(location.getLatitude(),location.getLongitude());
+            Log.d(TAG, "onLocationChanged: " + latLng.latitude + " " + latLng.longitude);
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+            mMap.animateCamera(CameraUpdateFactory.zoomTo(10));
 
-                btnRestorentFind.setEnabled(true);
-                btnHospitalFind.setEnabled(true);
-            }
+            btnRestorentFind.setEnabled(true);
         }
     }
+
 }

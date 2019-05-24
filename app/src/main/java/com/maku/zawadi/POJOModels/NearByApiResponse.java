@@ -1,4 +1,4 @@
-package com.maku.zawadi.model;
+package com.maku.zawadi.POJOModels;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Example {
+public class NearByApiResponse {
 
     @SerializedName("html_attributions")
     @Expose
@@ -94,3 +94,5 @@ public class Example {
     }
 
 }
+
+

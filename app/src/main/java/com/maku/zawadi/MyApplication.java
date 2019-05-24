@@ -29,7 +29,7 @@ public class MyApplication extends Application {
         if (nearByApi == null) {
             HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
             interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-            OkHttpClient client = new OkHttpClient.Builder().retryOnConnectionFailure(true).readTimeout(80, TimeUnit.SECONDS).connectTimeout(80, TimeUnit.SECONDS).addInterceptor(interceptor).build();
+            OkHttpClient client = new OkHttpClient.Builder().retryOnConnectionFailure(true).readTimeout(15000, TimeUnit.SECONDS).connectTimeout(150000, TimeUnit.MILLISECONDS).addInterceptor(interceptor).build();
 
             Retrofit retrofit = new Retrofit.Builder().baseUrl(Constants.PLACE_API_BASE_URL).addConverterFactory(getApiConvertorFactory()).client(client).build();
 
