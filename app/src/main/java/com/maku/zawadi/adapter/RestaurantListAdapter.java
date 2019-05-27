@@ -31,6 +31,10 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
         this.rowLayout = rowLayout;
     }
 
+    public RestaurantListAdapter() {
+
+    }
+
 
     @NonNull
     @Override
@@ -75,10 +79,10 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
         protected FilterResults performFiltering(CharSequence constraint) {
             List<Result>  filteredList =  new ArrayList<>();
             if (constraint == null || constraint.length() == 0) {
-                filteredList.add((Result) mRestaurantsSearch);
+                filteredList.add((Result) mRestaurants);
             } else {
                 String filterPattern = constraint.toString().toLowerCase().trim();
-                for (Result result : mRestaurantsSearch) {
+                for (Result result : mRestaurants) {
                     if (result.getName().toLowerCase().contains(filterPattern)) {
                         filteredList.add(result);
                     }
@@ -92,7 +96,7 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
             mRestaurants.clear();
-            mRestaurants.add((Result) results.values);
+            mRestaurants.addAll((List<Result>) results.values);
             notifyDataSetChanged();
         }
     };
