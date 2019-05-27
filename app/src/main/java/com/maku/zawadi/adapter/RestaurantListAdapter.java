@@ -3,24 +3,30 @@ package com.maku.zawadi.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import com.maku.zawadi.POJOModels.Result;
 import com.maku.zawadi.R;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAdapter.RestaurantViewHolder> {
+public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAdapter.RestaurantViewHolder> implements Filterable {
     private List<Result> mRestaurants;
+    private List<Result> mRestaurantsSearch;
     private Context mContext;
     private int rowLayout;
 
     public RestaurantListAdapter(List<Result> mRestaurants) {
         this.mRestaurants = mRestaurants;
+        mRestaurantsSearch = new ArrayList<Result>();
         this.mContext = mContext;
         this.rowLayout = rowLayout;
     }
@@ -56,4 +62,38 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
         }
     }
 
+    /*************************** SERACH ISSUES*********************/
+
+    @Override
+    public Filter getFilter() {
+        Log.d("RestaurantListAdapter", "getFilter: ");
+        return searchFilter;
+    }
+
+    private Filter searchFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<Result>  filteredList =  new ArrayList<>();
+            if (constraint == null || constraint.length() == 0) {
+                filteredList.add((Result) mRestaurantsSearch);
+            } else {
+                String filterPattern = constraint.toString().toLowerCase().trim();
+                for (Result result : mRestaurantsSearch) {
+                    if (result.getName().toLowerCase().contains(filterPattern)) {
+                        filteredList.add(result);
+                    }
+                }
+            }
+            FilterResults filterResults = new FilterResults();
+            filterResults.values = filteredList;
+            return filterResults ;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            mRestaurants.clear();
+            mRestaurants.add((Result) results.values);
+            notifyDataSetChanged();
+        }
+    };
 }

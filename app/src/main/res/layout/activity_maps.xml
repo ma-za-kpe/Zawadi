@@ -28,7 +28,7 @@
             android:textSize="20sp"
             android:textColor="#000"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="match_parent"
             android:text="click to view list"
             />
 
@@ -45,7 +45,9 @@
             android:padding="10dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/re"></android.support.v7.widget.RecyclerView>
+            android:id="@+id/re">
+
+        </android.support.v7.widget.RecyclerView>
 
 
     </RelativeLayout>
