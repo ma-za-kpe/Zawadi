@@ -2,7 +2,10 @@ package com.maku.zawadi;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -14,7 +17,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -35,12 +38,16 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.maku.zawadi.POJOModels.Example;
+import com.maku.zawadi.POJOModels.OpeningHours;
+import com.maku.zawadi.POJOModels.Photo;
 import com.maku.zawadi.POJOModels.Result;
 import com.maku.zawadi.adapter.RestaurantListAdapter;
 import com.maku.zawadi.model.Restaurant;
 import com.maku.zawadi.networking.NearByApi;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -185,8 +192,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         if (task.isSuccessful()) {
                             Log.d(TAG, "onComplete: found location");
                             Location currentLocation = (Location) task.getResult();
-                            moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()),
-                                    DEFAULT_ZOOM, "current location" + currentLocation.getProvider());
+                            if (currentLocation != null) {
+                                moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()),
+                                        DEFAULT_ZOOM, "current location" + currentLocation.getProvider());
+                            }
                         } else {
                             Log.d(TAG, "onComplete: current location is null");
                             Toast.makeText(MapsActivity.this, "unable to get the current location", Toast.LENGTH_LONG).show();
@@ -209,24 +218,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .title(title);
         mMap.addMarker(markerOptions);
     }
-
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can a protected synchronized void buildGoogleApiClient() {
-     mGoogleApiClient = new GoogleApiClient.Builder(this).addConnectionCallbacks(this).addOnConnectionFailedListener(this).addApi(LocationServices.API).build();
-     mGoogleApiClient.connect();
-     }
-
-     public void onRestorentFindClick(View view){
-     findPlaces("restaurant");
-     }
-     dd markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
 
     protected synchronized void buildGoogleApiClient() {
         Log.d(TAG, "buildGoogleApiClient: ");
@@ -276,8 +267,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             Double lng = response.body().getResults().get(i).getGeometry().getLocation().getLng();
                             String placeName = response.body().getResults().get(i).getName();
                             String vicinity = response.body().getResults().get(i).getVicinity();
+                            Integer priceLevel = response.body().getResults().get(i).getPriceLevel();
+                            OpeningHours openingHours = response.body().getResults().get(i).getOpeningHours();
+                            Double rating = response.body().getResults().get(i).getRating();
+                            List<Photo> photUrls = response.body().getResults().get(i).getPhotos();
+                            final List<String> photoUrl = new ArrayList<String>();
 
-                            final Restaurant restaurant = new Restaurant(placeName);
+                            for (int y=0; y <photUrls.size(); y++){
+                                photoUrl.add(photUrls.get(y).getHtmlAttributions().toString().substring(9, 74));
+                                Log.d(TAG, "onResponse: photo" + photUrls.get(y).getHtmlAttributions().toString().substring(9, 74));
+                            }
+
+                            Restaurant restaurant = new Restaurant(placeName);
                             restaurants.add(restaurant);
 
                             runOnUiThread(new Runnable() {
@@ -287,14 +288,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                                     ArrayList<Result> rest = (ArrayList<Result>) response.body().getResults();
                                     recyclerView.setAdapter(new RestaurantListAdapter(rest));
+                                    Log.d(TAG, "Number of restaurant received: " + rest.size());
 
-                                    Log.d(TAG, "Number of movies received: " + rest.size());
 
                                 }
                             });
 
                             Log.d(TAG, "findPlaces: name..." +  restaurant.getName());
-                            Log.d(TAG, "findPlaces: vicinity..." + vicinity);
+                            Log.d(TAG, "findPlaces: rating..." +  rating);
+                            Log.d(TAG, "findPlaces: placeName..." + placeName);
+                            Log.d(TAG, "findPlaces: priceLevel..." + priceLevel);
+//                            Log.d(TAG, "findPlaces: photoUrl..." + photoUrl);
+//                            Log.d(TAG, "findPlaces: rating..." + rating);
 
                             MarkerOptions markerOptions = new MarkerOptions();
                             LatLng latLng = new LatLng(lat, lng);
@@ -308,7 +313,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             Marker m = mMap.addMarker(markerOptions);
                             // move map camera
                             mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-                            mMap.animateCamera(CameraUpdateFactory.zoomTo(13));
+                            mMap.animateCamera(CameraUpdateFactory.zoomTo(18));
 //                            Log.d(TAG, "onResponse: arraylist " + restaurants.get(i).getName());
 
                         }
@@ -340,7 +345,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Log.d(TAG, "display: ");
         newRestaurant = new ArrayList<>();
         for (int i = 0; i < al.size(); i++) {
-//            Log.d(TAG, "display: arrayList" + al.get(i));
+            Log.d(TAG, "display: arrayList" + al.get(i));
             newRestaurant.add(al.get(i));
         }
         Log.d(TAG, "display:New restaurant arrayList" + newRestaurant);
@@ -379,6 +384,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onClick(View v) {
+        Log.d(TAG, "onClick: find restaurant");
         findPlaces("restaurant");
 //
 //        Intent intent1=new Intent(MapsActivity.this, RestaurantsActivity.class);
@@ -424,7 +430,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             LatLng latLng = new LatLng(location.getLatitude(),location.getLongitude());
             Log.d(TAG, "onLocationChanged: " + latLng.latitude + " " + latLng.longitude);
             mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-            mMap.animateCamera(CameraUpdateFactory.zoomTo(10));
+            mMap.animateCamera(CameraUpdateFactory.zoomTo(20));
 
             btnRestorentFind.setEnabled(true);
         }

@@ -12,6 +12,7 @@ import com.maku.zawadi.POJOModels.Result;
 import com.maku.zawadi.R;
 
 import java.util.List;
+import java.util.Locale;
 
 public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAdapter.RestaurantViewHolder> {
     private List<Result> mRestaurants;
@@ -25,8 +26,6 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
     }
 
 
-
-
     @NonNull
     @Override
     public RestaurantListAdapter.RestaurantViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
@@ -38,6 +37,7 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
     @Override
     public void onBindViewHolder(@NonNull RestaurantListAdapter.RestaurantViewHolder restaurantViewHolder, int i) {
         restaurantViewHolder.mNameTextView.setText(mRestaurants.get(i).getName());
+        restaurantViewHolder.mRatingTextView.setText(String.format(Locale.getDefault(), "%f", mRestaurants.get(i).getRating()));
     }
 
     @Override
@@ -47,10 +47,12 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
 
     public class RestaurantViewHolder extends RecyclerView.ViewHolder {
         TextView mNameTextView;
+        TextView mRatingTextView;
 
         public RestaurantViewHolder(@NonNull View itemView) {
             super(itemView);
             mNameTextView = itemView.findViewById(R.id.restaurantNameTextView);
+            mRatingTextView = itemView.findViewById(R.id.restaurantRatingTextView);
         }
     }
 

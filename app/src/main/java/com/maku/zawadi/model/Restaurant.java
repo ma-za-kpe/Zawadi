@@ -8,10 +8,6 @@ public class Restaurant {
         this.name = name;
     }
 
-    public Restaurant() {
-
-    }
-
     public String getName() {
         return name;
     }
@@ -20,4 +16,5 @@ public class Restaurant {
     public String toString() {
         return name;
     }
+
 }
