@@ -45,17 +45,34 @@ class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
                         break;
                     case 1:
                         Intent intent=new Intent(v.getContext(),MapsActivity.class);
-                        intent.putExtra("bar" , mCategories.get(i));
+                        intent.putExtra("restaurant" , mCategories.get(i));
                         v.getContext().startActivity(intent);
                         Log.i("MainAdapter", "onClick: " + mCategories.get(i));
                         break;
                     case 2:
                         Intent intent2=new Intent(v.getContext(),MapsActivity.class);
-                        intent2.putExtra("supermarket" , mCategories.get(i));
+                        intent2.putExtra("restaurant" , mCategories.get(i));
                         v.getContext().startActivity(intent2);
                         Log.i("MainAdapter", "onClick: " + mCategories.get(i));
                         break;
-
+                    case 3:
+                        Intent intent3=new Intent(v.getContext(),MapsActivity.class);
+                        intent3.putExtra("restaurant" , mCategories.get(i));
+                        v.getContext().startActivity(intent3);
+                        Log.i("MainAdapter", "onClick: " + mCategories.get(i));
+                        break;
+                    case 4:
+                        Intent intent4=new Intent(v.getContext(),MapsActivity.class);
+                        intent4.putExtra("restaurant" , mCategories.get(i));
+                        v.getContext().startActivity(intent4);
+                        Log.i("MainAdapter", "onClick: " + mCategories.get(i));
+                        break;
+                    case 5:
+                        Intent intent5=new Intent(v.getContext(),MapsActivity.class);
+                        intent5.putExtra("restaurant" , mCategories.get(i));
+                        v.getContext().startActivity(intent5);
+                        Log.i("MainAdapter", "onClick: " + mCategories.get(i));
+                        break;
                 }
 
             }

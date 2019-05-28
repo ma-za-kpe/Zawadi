@@ -120,22 +120,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         //ArrayList
         mCategories = new ArrayList<String>();
-        mCategories.add("RESTAURANTS");
-        mCategories.add("BARS");
-        mCategories.add("SUPERMAKETS");
+        mCategories.add("CAFE");
+        mCategories.add("LIQUOR_STORE");
+        mCategories.add("RESTAURANT");
+        mCategories.add("SUPERMARKET");
         mCategories.add("PHARMACY");
+        mCategories.add("NIGHT_CLUB");
+
+
 
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         adapter = new MainAdapter(mCategories);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(layoutManager);
-
-        Intent intent = getIntent();
-        String email = intent.getStringExtra("email");
-        String photo = intent.getStringExtra("photo");
-        String name = intent.getStringExtra("name");
-
 
         // GoogleSignInOptions 개체 구성
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)

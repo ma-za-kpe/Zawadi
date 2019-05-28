@@ -102,6 +102,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     @BindView(R.id.re) RecyclerView recyclerView;
     RestaurantListAdapter mRestaurantListAdapter;
 
+    //INTENT EXTRAS
+    private String restaurant;
+    private String bar;
+    private String supermarket;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d(TAG, "onCreate: on create ...");
@@ -110,6 +115,18 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         ButterKnife.bind(this);
 
+        //restaurant
+         restaurant = getIntent().getExtras().getString("restaurant");
+        Log.d(TAG, "onCreate: restaurant " + restaurant);
+
+        //bar
+         bar = getIntent().getExtras().getString("bar");
+        Log.d(TAG, "onCreate: restaurant " + bar);
+
+        //bar
+         supermarket = getIntent().getExtras().getString("supermarket");
+        Log.d(TAG, "onCreate: restaurant " + supermarket);
+
 //        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
 //        setSupportActionBar(mToolbar);
 
@@ -117,6 +134,20 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         btnRestorentFind = (Button) findViewById(R.id.rest);
+        String btnRestorentFindText = btnRestorentFind.getText().toString();
+
+        btnRestorentFind.setText(restaurant);
+
+//        if (!btnRestorentFindText.equals(restaurant)){
+//            btnRestorentFind.setText(restaurant);
+//        } else if (!btnRestorentFindText.equals(bar)){
+//            btnRestorentFind.setText(bar);
+//        }else if (!btnRestorentFindText.equals(supermarket)){
+//            btnRestorentFind.setText(supermarket);
+//        } else {
+//            Log.d(TAG, "onCreate: clicked button is not in the list");
+//        }
+
 //        btnHospitalBar = (Button) findViewById(R.id.rest);
         //location permissions
         getLocationPermission();
@@ -371,7 +402,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     protected void onStart() {
         super.onStart();
-        Log.d(TAG, "onStart: oon start activity");
+        Log.d(TAG, "onStart: oon start activity" + "BAAAAAAAAAAAAAAAAAAAAAR is " );
     }
 
     @Override
@@ -401,8 +432,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     @Override
     public void onClick(View v) {
-        Log.d(TAG, "onClick: find restaurant");
-        findPlaces("restaurant");
+//        Log.d(TAG, "onClick: find restaurant or bar or supermarket" + bar.toLowerCase() + " " + supermarket.toLowerCase() + " " + restaurant.toLowerCase());
+        Log.d(TAG, "onClick: find restaurant or bar or supermarket"  + restaurant.toLowerCase());
+
+        btnRestorentFind = (Button)v;
+        String buttonText = btnRestorentFind.getText().toString().toLowerCase();
+        Log.d(TAG, "onClick: btn xxxxxxxxxxxxx: " + buttonText);
+
+        findPlaces(buttonText);
     }
 
     @Override
