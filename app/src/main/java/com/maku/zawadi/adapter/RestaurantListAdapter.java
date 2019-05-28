@@ -79,7 +79,7 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
         protected FilterResults performFiltering(CharSequence constraint) {
             List<Result>  filteredList =  new ArrayList<>();
             if (constraint == null || constraint.length() == 0) {
-                filteredList.add((Result) mRestaurants);
+                filteredList.add((Result) mRestaurants );
             } else {
                 String filterPattern = constraint.toString().toLowerCase().trim();
                 for (Result result : mRestaurants) {
