@@ -123,6 +123,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mCategories.add("RESTAURANTS");
         mCategories.add("BARS");
         mCategories.add("SUPERMAKETS");
+        mCategories.add("PHARMACY");
 
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
