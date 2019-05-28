@@ -92,7 +92,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private Boolean mLocationPermissionGranted = false;
 
     //places
-    private Button btnRestorentFind, btnHospitalFind;
+    private Button btnRestorentFind, btnHospitalBar;
     private LocationRequest mLocationRequest;
     private Location location;
     private int PROXIMITY_RADIUS = 8000;
@@ -117,6 +117,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         btnRestorentFind = (Button) findViewById(R.id.rest);
+//        btnHospitalBar = (Button) findViewById(R.id.rest);
         //location permissions
         getLocationPermission();
 

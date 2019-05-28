@@ -44,12 +44,15 @@ class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
                         Toast.makeText(v.getContext(), "Recycle Click " +mCategories.get(i) , Toast.LENGTH_SHORT).show();
                         break;
                     case 1:
-                        Intent intent=new Intent(v.getContext(),RestaurantsActivity.class);
+                        Intent intent=new Intent(v.getContext(),MapsActivity.class);
                         intent.putExtra("bar" , mCategories.get(i));
                         v.getContext().startActivity(intent);
                         Log.i("MainAdapter", "onClick: " + mCategories.get(i));
                         break;
                     case 2:
+                        Intent intent2=new Intent(v.getContext(),MapsActivity.class);
+                        intent2.putExtra("supermarket" , mCategories.get(i));
+                        v.getContext().startActivity(intent2);
                         Log.i("MainAdapter", "onClick: " + mCategories.get(i));
                         break;
 
