@@ -55,6 +55,11 @@
             android:theme="@style/AppTheme"
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps">
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.maku.zawadi.MainActivity" />
+
         </activity>
         <activity android:name=".VerifyPhoneActivity" />
         <activity
@@ -70,9 +75,6 @@
         <activity
             android:name=".MainActivity"
             android:theme="@style/NoActionBarTheme">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.maku.zawadi.MainActivity" />
         </activity>
         <activity android:name=".RestaurantsActivity" />
     </application>
