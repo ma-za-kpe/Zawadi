@@ -5,6 +5,7 @@ import com.maku.zawadi.BuildConfig;
 public class Constants {
     //GOOGLE MAPS API SETTINGS
     public static final String Google_api = BuildConfig.googlePlacesapikey;
+    public static String PLACE_API_BASE_URL = "https://maps.googleapis.com/maps/";
 
     //SHARED PREFENCES
     public static final String PREFERENCES_EMAIL_KEY = "email";

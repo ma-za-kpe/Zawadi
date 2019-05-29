@@ -1,6 +1,19 @@
 apply plugin: 'com.android.application'
 
 android {
+    packagingOptions {
+        // Exclude file to avoid
+        // Error: Duplicate files during packaging of APK
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/ASL2.0'
+        exclude 'META-INF/services/javax.annotation.processing.Processor'
+    }
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.maku.zawadi"
@@ -30,6 +43,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    //noinspection GradleCompatible
     implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation 'com.android.support:design:28.0.0'
     implementation 'com.android.support:support-v4:28.0.0'
@@ -38,6 +52,7 @@ dependencies {
     implementation 'com.hbb20:ccp:2.2.3'
     implementation 'com.google.android.gms:play-services-auth:16.0.1'
     implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation 'com.google.firebase:firebase-database:17.0.0'
     testImplementation 'junit:junit:4.12'
     testImplementation "org.robolectric:robolectric:4.2"
     implementation 'com.jakewharton:butterknife:8.8.1'
@@ -51,6 +66,11 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:17.0.0'
     implementation 'com.google.gms:google-services:4.2.0'
     implementation 'com.google.android.gms:play-services-maps:16.1.0'
+    //google play services
+    implementation "com.google.android.gms:play-services-plus:16.0.0"
+    implementation 'com.google.android.gms:play-services-maps:16.1.0'
+    implementation "com.google.android.gms:play-services-location:16.0.0"
+    implementation 'com.google.android.libraries.places:places:1.1.0'
 
     //Firebase dependencies
     implementation 'com.firebase:firebase-client-android:2.4.0'
@@ -59,7 +79,21 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging:18.0.0'
     implementation 'com.android.support:design:28.0.0'
 
-    implementation 'com.android.support:recyclerview-v7:+'
+    implementation 'com.android.support:recyclerview-v7:28.0.0'
+
+    //location
+    implementation 'com.google.android.gms:play-services-location:16.0.0'
+
+//Retrofit networking api
+    implementation "com.squareup.retrofit2:retrofit:2.1.0"
+    implementation "com.squareup.retrofit2:converter-gson:2.1.0"
+    implementation 'com.squareup.okhttp:okhttp:2.4.0'
+    implementation "com.squareup.okhttp3:logging-interceptor:3.4.1"
+    implementation 'com.google.code.gson:gson:2.8.5'
+
+    //parceler
+    implementation "org.parceler:parceler-api:1.1.12"
+    annotationProcessor "org.parceler:parceler:1.1.12"
 
 }
 

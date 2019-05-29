@@ -1,5 +1,6 @@
 package com.maku.zawadi;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -16,6 +17,8 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
@@ -33,6 +36,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
@@ -50,6 +54,7 @@ import com.hbb20.CountryCodePicker;
 import com.maku.zawadi.constants.Constants;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
@@ -57,24 +62,16 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
 
-    private String[] vendors = new String[] {"Restaurants", "Bars", "Pharmacy"};
-
     public  static  final String TAG = MainActivity.class.getSimpleName();
     private SharedPreferences mSharedPreferences;
     private String mEmail;
     private String mPhoto;
     private String mPhoneNumber;
-
-    @BindView(R.id.restaurant)
-    CardView mRestaurant;
     private FirebaseAuth mAuth;
     private GoogleApiClient mGoogleApiClient;
     private GoogleSignInClient mGoogleSignInClient;
 
     public static final String GOOGLE_ACCOUNT = "google_account";
-//     @BindView(R.id.profile_text) TextView profileName ;
-//    @BindView(R.id.profile_email) TextView profileEmail;
-//    @BindView(R.id.profile_image) ImageView profileImage;
 
     private ActionBarDrawerToggle mDrawerToggle;
     private String mActivityTitle;
@@ -82,6 +79,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @BindView(R.id.drawer_layout) DrawerLayout drawerLayout;
     @BindView(R.id.toolbar_main) Toolbar toolbar;
 
+    //Arraylist of categories
+    ArrayList<String> mCategories;
+    @BindView(R.id.catRecycler) RecyclerView recyclerView;
+    RecyclerView.LayoutManager layoutManager;
+    RecyclerView.Adapter adapter;
+
+    public static final int ERROR_DIALOG_REQUEST = 9001;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,8 +93,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         ButterKnife.bind(this);
-
-
 
         setSupportActionBar(toolbar);
 
@@ -116,25 +118,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         Typeface kushanScriptRegular = Typeface.createFromAsset(getAssets(), "fonts/kaushanscriptregular.otf");
 
-        Intent intent = getIntent();
-        String email = intent.getStringExtra("email");
-        String photo = intent.getStringExtra("photo");
-        String name = intent.getStringExtra("name");
-//        profileName.setText(name);
-//        profileEmail.setText(email);
-//        Log .d(TAG, "Test user photo " + photo);
-//
-//        Picasso.get()
-//                .load(photo)
-//                .into(profileImage);
+        //ArrayList
+        mCategories = new ArrayList<String>();
+        mCategories.add("CAFE");
+        mCategories.add("LIQUOR_STORE");
+        mCategories.add("RESTAURANT");
+        mCategories.add("SUPERMARKET");
+        mCategories.add("PHARMACY");
+        mCategories.add("NIGHT_CLUB");
 
-        mRestaurant.setOnClickListener(this);
 
-//        GoogleSignInAccount googleSignInAccount = getIntent().getParcelableExtra(GOOGLE_ACCOUNT);
-//        Picasso.get().load(googleSignInAccount.getPhotoUrl().toString()).centerInside().fit().into(profileImage);
-//        profileName.setText(googleSignInAccount.getDisplayName());
-//        profileEmail.setText(googleSignInAccount.getEmail());
 
+        recyclerView.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(this);
+        adapter = new MainAdapter(mCategories);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(layoutManager);
 
         // GoogleSignInOptions 개체 구성
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -184,14 +183,33 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    //check if google services are ok and enabled
+    public boolean isServiceOk(){
+        Log.d(TAG, "checking google play service version?");
+        int available = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(MainActivity.this);
+        if (available == ConnectionResult.SUCCESS){
+            //everything is fine and the user can make map requests
+            Log.d(TAG, " google play service is working");
+            return true;
+        } else if(GoogleApiAvailability.getInstance().isUserResolvableError(available)){
+            //a fixable error occured
+            Log.d(TAG, "an error occured but we can fix it");
+            Dialog dialog = GoogleApiAvailability.getInstance().getErrorDialog(MainActivity.this, available, ERROR_DIALOG_REQUEST);
+            dialog.show();
+        } else {
+            Toast.makeText(this,"you cannot make request", Toast.LENGTH_LONG).show();
+        }
+        return false;
+    }
+
     @Override
     public void onClick(View v) {
 
-        if(v == mRestaurant) {
-
-            Intent intent = new Intent(MainActivity.this, RestaurantsActivity.class);
-            startActivity(intent);
-        }
+//        if(v == mRestaurant) {
+//
+//            Intent intent = new Intent(MainActivity.this, RestaurantsActivity.class);
+//            startActivity(intent);
+//        }
 
     }
 
@@ -283,10 +301,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }case R.id.nav_item_four : {
                 Toast.makeText(MainActivity.this,  mPhoneNumber,
                         Toast.LENGTH_SHORT).show();
+                Intent phoneIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + 0715434451));
+//                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", phone, null));
+                startActivity(phoneIntent);
                 UserSignOutFunction();
                 break;
             } case R.id.nav_item_five : {
                 UserSignOutFunction();
+                break;
+            } case R.id.nav_item_SIX : {
+                if(isServiceOk()){
+                    Intent intent = new Intent(MainActivity.this, MapsActivity.class);
+                    startActivity(intent);
+                }
                 break;
             } default:
                 return super.onOptionsItemSelected(menuItem);

@@ -18,7 +18,10 @@
         <menu>
             <item android:id="@+id/nav_item_four"
                 android:icon="@drawable/ic_action_local_phone"
-                android:title="PHONE NUMBER" />
+                android:title="CALL SUPPORT" />
+            <item android:id="@+id/nav_item_SIX"
+                android:icon="@drawable/ic_map"
+                android:title="MAP" />
             <item android:id="@+id/nav_item_five"
                 android:icon="@drawable/ic_action_arrow_back"
                 android:title="SIGN OUT" />
