@@ -80,9 +80,13 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
         public void onClick(View view) {
             int itemPosition = getLayoutPosition();
             Intent intent = new Intent(view.getContext(), MenuActivity.class);
-            intent.putExtra("position", itemPosition);
-            intent.putExtra("restaurants", Parcels.wrap(mRestaurants));
-            view.getContext().startActivity(intent);        }
+            if (intent != null)
+            {
+                intent.putExtra("position", itemPosition);
+                intent.putExtra("restaurants", Parcels.wrap(mRestaurants));
+                view.getContext().startActivity(intent);
+            }
+        }
     }
 
     /*************************** SERACH ISSUES*********************/
