@@ -2,6 +2,7 @@ package com.maku.zawadi.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -13,8 +14,8 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
 
-import com.maku.zawadi.MenuDetailActivity;
-import com.maku.zawadi.MenuDetailFragment;
+import com.maku.zawadi.MenuActivity;
+import com.maku.zawadi.MenuFragment;
 import com.maku.zawadi.POJOModels.Result;
 import com.maku.zawadi.R;
 
@@ -52,7 +53,8 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
 
     @Override
     public void onBindViewHolder(@NonNull RestaurantListAdapter.RestaurantViewHolder restaurantViewHolder, int i) {
-        restaurantViewHolder.mNameTextView.setText(mRestaurants.get(i).getName());
+        final Result name = mRestaurants.get(i);
+        restaurantViewHolder.mNameTextView.setText(name.getName());
         restaurantViewHolder.mRatingTextView.setText(String.format(Locale.getDefault(), "%f", mRestaurants.get(i).getRating()));
     }
 
@@ -61,7 +63,7 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
         return mRestaurants.size();
     }
 
-    public class RestaurantViewHolder extends RecyclerView.ViewHolder {
+    public class RestaurantViewHolder extends RecyclerView.ViewHolder  implements  View.OnClickListener{
         TextView mNameTextView;
         TextView mRatingTextView;
         CardView mCardView;
@@ -71,17 +73,16 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
             mNameTextView = itemView.findViewById(R.id.restaurantNameTextView);
             mRatingTextView = itemView.findViewById(R.id.restaurantRatingTextView);
             mCardView = itemView.findViewById(R.id.card_view);
-                    mCardView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int itemPosition = getLayoutPosition();
-                    Intent intent = new Intent(v.getContext(), MenuDetailActivity.class);
-                    intent.putExtra("position", itemPosition);
-                    intent.putExtra("restaurants", Parcels.wrap(mRestaurants));
-                    v.getContext().startActivity(intent);
-                }
-            });
+            mCardView.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View view) {
+            int itemPosition = getLayoutPosition();
+            Intent intent = new Intent(view.getContext(), MenuActivity.class);
+            intent.putExtra("position", itemPosition);
+            intent.putExtra("restaurants", Parcels.wrap(mRestaurants));
+            view.getContext().startActivity(intent);        }
     }
 
     /*************************** SERACH ISSUES*********************/

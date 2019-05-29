@@ -2,53 +2,55 @@ package com.maku.zawadi.POJOModels;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-//import org.parceler.Parcel;
+
+import org.parceler.Parcel;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Result implements Serializable {
+@Parcel
+public class Result {
 
     @SerializedName("geometry")
     @Expose
-    private Geometry geometry;
+     Geometry geometry;
     @SerializedName("icon")
     @Expose
-    private String icon;
+     String icon;
     @SerializedName("id")
     @Expose
-    private String id;
+     String id;
     @SerializedName("name")
     @Expose
-    private String name;
+     String name;
     @SerializedName("opening_hours")
     @Expose
-    private OpeningHours openingHours;
+     OpeningHours openingHours;
     @SerializedName("photos")
     @Expose
-    private List<Photo> photos = new ArrayList<Photo>();
+     List<Photo> photos = new ArrayList<>();
     @SerializedName("place_id")
     @Expose
-    private String placeId;
+     String placeId;
     @SerializedName("rating")
     @Expose
-    private Double rating;
+     Double rating;
     @SerializedName("reference")
     @Expose
-    private String reference;
+     String reference;
     @SerializedName("scope")
     @Expose
-    private String scope;
+     String scope;
     @SerializedName("types")
     @Expose
-    private List<String> types = new ArrayList<String>();
+     List<String> types = new ArrayList<String>();
     @SerializedName("vicinity")
     @Expose
-    private String vicinity;
+     String vicinity;
     @SerializedName("price_level")
     @Expose
-    private Integer priceLevel;
+     Integer priceLevel;
 
     public Result() {
     }

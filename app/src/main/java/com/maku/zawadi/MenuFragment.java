@@ -8,11 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import org.parceler.Parcels;
-
 
 import com.maku.zawadi.POJOModels.Result;
-import com.maku.zawadi.model.Restaurant;
+
+import org.parceler.Parcels;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -21,49 +20,53 @@ import butterknife.ButterKnife;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link MenuDetailFragment.OnFragmentInteractionListener} interface
+ * {@link MenuFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
  */
-public class MenuDetailFragment extends Fragment {
+public class MenuFragment extends Fragment {
+
+    TextView mNameLabel;
+    TextView mRatingLabel;
 
     private OnFragmentInteractionListener mListener;
-    @BindView(R.id.restaurantNameTextView)
-    TextView mNameLabel;
-    @BindView(R.id.ratingTextView) TextView mRatingLabel;
 
-    private Restaurant mRestaurant;
-
-    public static MenuDetailFragment newInstance(Restaurant restaurant) {
-        MenuDetailFragment menuDetailFragment = new MenuDetailFragment();
-        Bundle args = new Bundle();
-        args.putParcelable("results", Parcels.wrap(restaurant));
-        menuDetailFragment.setArguments(args);
-        return menuDetailFragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mRestaurant = Parcels.unwrap(getArguments().getParcelable("results"));
-    }
-
-    public MenuDetailFragment() {
+    public MenuFragment() {
         // Required empty public constructor
     }
 
+    private Result mResult;
+// is used instead of a constructor and returns a new instance of our MenuFragment
+    public static MenuFragment newInstance(Result result) {
+        MenuFragment menuFragment = new MenuFragment();
+        Bundle args = new Bundle();
+        args.putParcelable("restaurant", Parcels.wrap(result));
+        menuFragment.setArguments(args);
+        return menuFragment;
+    }
+
+    //is called when the fragment is created. Here, we unwrap our Result object from the arguments we added in the newInstance() method.
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mResult = Parcels.unwrap(getArguments().getParcelable("restaurant"));
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+//        ButterKnife.bind(this, container);
+
+        View v = inflater.inflate(R.layout.fragment_menu, container, false);
+
+        mNameLabel = v.findViewById(R.id.NameTextView);
+        mRatingLabel = v.findViewById(R.id.ratingTextView);
+
+        mNameLabel.setText(mResult.getName());
+        mRatingLabel.setText(mResult.getRating() + "/5");
+
         // Inflate the layout for this fragment
-
-        View view = inflater.inflate(R.layout.fragment_menu_detail, container, false);;
-        ButterKnife.bind(this, view);
-
-        mNameLabel.setText(mRestaurant.getName());
-        mRatingLabel.setText(Double.toString(mRestaurant.getRating()) + "/5");
-
-        return view;
+        return v;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -103,5 +106,9 @@ public class MenuDetailFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    public void setInteractionListener(OnFragmentInteractionListener mListener){
+        this.mListener = mListener;
     }
 }

@@ -1,5 +1,7 @@
 package com.maku.zawadi.model;
 
+import org.parceler.Parcel;
+
 public class Restaurant {
 
     private String name;

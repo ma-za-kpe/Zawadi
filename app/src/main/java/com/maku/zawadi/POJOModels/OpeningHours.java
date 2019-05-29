@@ -3,17 +3,20 @@ package com.maku.zawadi.POJOModels;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import org.parceler.Parcel;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@Parcel
 public class OpeningHours {
 
     @SerializedName("open_now")
     @Expose
-    private Boolean openNow;
-    @SerializedName("weekday_text")
-    @Expose
-    private List<Object> weekdayText = new ArrayList<Object>();
+    Boolean openNow;
+
+    public OpeningHours() {
+    }
 
     /**
      *
@@ -33,23 +36,7 @@ public class OpeningHours {
         this.openNow = openNow;
     }
 
-    /**
-     *
-     * @return
-     * The weekdayText
-     */
-    public List<Object> getWeekdayText() {
-        return weekdayText;
-    }
 
-    /**
-     *
-     * @param weekdayText
-     * The weekday_text
-     */
-    public void setWeekdayText(List<Object> weekdayText) {
-        this.weekdayText = weekdayText;
-    }
 
 }
 

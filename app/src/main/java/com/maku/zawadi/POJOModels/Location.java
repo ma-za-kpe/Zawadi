@@ -3,14 +3,20 @@ package com.maku.zawadi.POJOModels;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import org.parceler.Parcel;
+
+@Parcel
 public class Location {
 
     @SerializedName("lat")
     @Expose
-    private Double lat;
+    Double lat;
     @SerializedName("lng")
     @Expose
-    private Double lng;
+    Double lng;
+
+    public Location() {
+    }
 
     /**
      *

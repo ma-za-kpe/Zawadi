@@ -1,5 +1,6 @@
 package com.maku.zawadi;
 
+import android.net.Uri;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,27 +13,31 @@ import org.parceler.Parcels;
 import java.util.ArrayList;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
-public class MenuDetailActivity extends AppCompatActivity {
+public class MenuActivity extends AppCompatActivity implements MenuFragment.OnFragmentInteractionListener {
 
     @BindView(R.id.viewPager)
     ViewPager mViewPager;
     private MenuPagerAdapter adapterViewPager;
-    ArrayList<Result> mResult = new ArrayList<>();
+    ArrayList<Result> mRestaurants = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_menu_detail);
+        setContentView(R.layout.activity_menu);
 
-        ButterKnife.bind(this);
+        mViewPager = findViewById(R.id.viewPager);
 
-        mResult = Parcels.unwrap(getIntent().getParcelableExtra("restaurants"));
+        mRestaurants = Parcels.unwrap(getIntent().getParcelableExtra("restaurants"));
         int startingPosition = getIntent().getIntExtra("position", 0);
 
-        adapterViewPager = new MenuPagerAdapter(getSupportFragmentManager(), mResult);
+        adapterViewPager = new MenuPagerAdapter(getSupportFragmentManager(), mRestaurants);
         mViewPager.setAdapter(adapterViewPager);
         mViewPager.setCurrentItem(startingPosition);
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }

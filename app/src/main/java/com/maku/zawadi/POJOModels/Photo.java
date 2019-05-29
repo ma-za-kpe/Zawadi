@@ -3,23 +3,29 @@ package com.maku.zawadi.POJOModels;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import org.parceler.Parcel;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@Parcel
 public class Photo {
 
     @SerializedName("height")
     @Expose
-    private Integer height;
+    Integer height;
     @SerializedName("html_attributions")
     @Expose
-    private List<String> htmlAttributions = new ArrayList<String>();
+    List<String> htmlAttributions = new ArrayList<String>();
     @SerializedName("photo_reference")
     @Expose
-    private String photoReference;
+    String photoReference;
     @SerializedName("width")
     @Expose
-    private Integer width;
+    Integer width;
+
+    public Photo() {
+    }
 
     /**
      *
