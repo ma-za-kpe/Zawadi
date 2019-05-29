@@ -325,7 +325,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                                 Log.d(TAG, "onResponse: photo" + photUrls.get(y).getHtmlAttributions().toString().substring(9, 74));
                             }
 
-                            Restaurant restaurant = new Restaurant(placeName);
+                            Restaurant restaurant = new Restaurant(placeName, rating);
                             restaurants.add(restaurant);
 
                             runOnUiThread(new Runnable() {

@@ -2,11 +2,13 @@ package com.maku.zawadi.POJOModels;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+//import org.parceler.Parcel;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Result {
+public class Result implements Serializable {
 
     @SerializedName("geometry")
     @Expose
@@ -47,6 +49,9 @@ public class Result {
     @SerializedName("price_level")
     @Expose
     private Integer priceLevel;
+
+    public Result() {
+    }
 
     /**
      *

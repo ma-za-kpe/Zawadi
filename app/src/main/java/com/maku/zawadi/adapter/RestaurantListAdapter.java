@@ -1,7 +1,9 @@
 package com.maku.zawadi.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,8 +13,12 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
 
+import com.maku.zawadi.MenuDetailActivity;
+import com.maku.zawadi.MenuDetailFragment;
 import com.maku.zawadi.POJOModels.Result;
 import com.maku.zawadi.R;
+
+import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,11 +64,23 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
     public class RestaurantViewHolder extends RecyclerView.ViewHolder {
         TextView mNameTextView;
         TextView mRatingTextView;
+        CardView mCardView;
 
         public RestaurantViewHolder(@NonNull View itemView) {
             super(itemView);
             mNameTextView = itemView.findViewById(R.id.restaurantNameTextView);
             mRatingTextView = itemView.findViewById(R.id.restaurantRatingTextView);
+            mCardView = itemView.findViewById(R.id.card_view);
+                    mCardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int itemPosition = getLayoutPosition();
+                    Intent intent = new Intent(v.getContext(), MenuDetailActivity.class);
+                    intent.putExtra("position", itemPosition);
+                    intent.putExtra("restaurants", Parcels.wrap(mRestaurants));
+                    v.getContext().startActivity(intent);
+                }
+            });
         }
     }
 

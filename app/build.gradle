@@ -91,6 +91,10 @@ dependencies {
     implementation "com.squareup.okhttp3:logging-interceptor:3.4.1"
     implementation 'com.google.code.gson:gson:2.8.5'
 
+    //parceler
+    implementation "org.parceler:parceler-api:1.1.12"
+    annotationProcessor "org.parceler:parceler:1.1.12"
+
 }
 
 apply plugin: 'com.google.gms.google-services'
