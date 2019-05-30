@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.maku.zawadi.POJOModels.Result;
+import com.maku.zawadi.adapter.MenuAdapter;
 
 import org.parceler.Parcels;
 
@@ -37,6 +38,7 @@ public class MenuFragment extends Fragment {
     RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
     RecyclerView.Adapter adapter;
+    Context context;
 
     private OnFragmentInteractionListener mListener;
 
@@ -71,13 +73,29 @@ public class MenuFragment extends Fragment {
 
         mNameLabel = v.findViewById(R.id.NameTextView);
         mRatingLabel = v.findViewById(R.id.ratingTextView);
+        recyclerView = v.findViewById(R.id.menuRecycler);
 
         mNameLabel.setText(mResult.getName());
         mRatingLabel.setText(mResult.getRating() + "/5");
 
         //ArrayList
         mMenu = new ArrayList<String>();
-        mMenu.add("CAFE");
+        mMenu.add("omlette");
+        mMenu.add("cappucino");
+        mMenu.add("pancakes");
+        mMenu.add("pancakes");
+        mMenu.add("pancakes");
+        mMenu.add("pancakes");
+        mMenu.add("pancakes");
+        mMenu.add("pancakes");
+        mMenu.add("pancakes");
+        mMenu.add("pancakes");
+
+        recyclerView.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(context);
+        adapter = new MenuAdapter(mMenu);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(layoutManager);
 
         // GoogleSignInOptions 개체 구성
 
