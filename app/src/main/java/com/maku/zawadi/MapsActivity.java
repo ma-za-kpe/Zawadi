@@ -154,6 +154,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        finish();
+    }
+
     //contains your lat and lon
     private void handleNewLocation(Location mlocation) {
         Log.d(TAG, mlocation.toString());

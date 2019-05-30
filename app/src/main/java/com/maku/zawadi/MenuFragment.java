@@ -4,6 +4,8 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +14,8 @@ import android.widget.TextView;
 import com.maku.zawadi.POJOModels.Result;
 
 import org.parceler.Parcels;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,6 +31,12 @@ public class MenuFragment extends Fragment {
 
     TextView mNameLabel;
     TextView mRatingLabel;
+
+    //Arraylist of categories
+    ArrayList<String> mMenu;
+    RecyclerView recyclerView;
+    RecyclerView.LayoutManager layoutManager;
+    RecyclerView.Adapter adapter;
 
     private OnFragmentInteractionListener mListener;
 
@@ -64,6 +74,12 @@ public class MenuFragment extends Fragment {
 
         mNameLabel.setText(mResult.getName());
         mRatingLabel.setText(mResult.getRating() + "/5");
+
+        //ArrayList
+        mMenu = new ArrayList<String>();
+        mMenu.add("CAFE");
+
+        // GoogleSignInOptions 개체 구성
 
         // Inflate the layout for this fragment
         return v;
