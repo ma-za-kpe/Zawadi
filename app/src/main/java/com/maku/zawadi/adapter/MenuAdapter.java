@@ -1,28 +1,48 @@
 package com.maku.zawadi.adapter;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.maku.zawadi.CartActivity;
 import com.maku.zawadi.MenuActivity;
+import com.maku.zawadi.MenuFragment;
 import com.maku.zawadi.R;
+import com.maku.zawadi.constants.Constants;
 
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.RestaurantViewHolder> {
 
     private ArrayList<String> mMenu;
 
+    //firebase instance variables
+    private FirebaseDatabase mfirebaseDatabase; //connect to our db
+    private DatabaseReference mMessagesDatabaseReference; //referencing specific part of db e.g messages
+
     public MenuAdapter(ArrayList<String> mMenu) {
         this.mMenu = mMenu;
     }
+
+    private SharedPreferences mSharedPreferences;
+    private String mName;
+    private String mRating;
 
     @NonNull
     @Override
@@ -32,9 +52,12 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.RestaurantView
         return viewHolder;
     }
 
+    String nom;
+
     @Override
     public void onBindViewHolder(@NonNull MenuAdapter.RestaurantViewHolder restaurantViewHolder, int i) {
-        restaurantViewHolder.name.setText(mMenu.get(i));
+       nom = mMenu.get(i);
+        restaurantViewHolder.name.setText(nom);
     }
 
     @Override
@@ -45,25 +68,49 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.RestaurantView
     public class RestaurantViewHolder extends RecyclerView.ViewHolder implements  View.OnClickListener {
 
         public TextView name;
+        public TextView price;
         public CardView cardView;
+
 
         public RestaurantViewHolder(@NonNull View itemView) {
             super(itemView);
 
             name = itemView.findViewById(R.id.foodName);
+            price = itemView.findViewById(R.id.price);
             cardView = itemView.findViewById(R.id.card_view);
             cardView.setOnClickListener(this);
+
+            //database implementation
+            mfirebaseDatabase = FirebaseDatabase.getInstance();
+            mMessagesDatabaseReference = mfirebaseDatabase.getReference().child("tempCart");
         }
 
         @Override
         public void onClick(View v) {
             int itemPosition = getLayoutPosition();
-            Intent intent = new Intent(v.getContext(), MenuActivity.class);
-            if (intent != null)
-            {
-                intent.putExtra("position", itemPosition);
-                v.getContext().startActivity(intent);
-            }
+            mMessagesDatabaseReference.push().setValue(name.getText());
+            mMessagesDatabaseReference.push().setValue(price.getText());
+            Log.w("firebase", "onClick: value "+ name.getText());
+
+//            Intent intent = new Intent(v.getContext(), MenuFragment.class);
+//            if (intent != null)
+//            {
+//                intent.putExtra("position", itemPosition);
+//                intent.putExtra("price", price.getText());
+//                intent.putExtra("name", name.getText());
+//
+//                Toast.makeText(v.getContext(), "food " + name.getText() , Toast.LENGTH_LONG).show();
+//
+//                v.getContext().startActivity(intent);
+//            }
+//            Bundle bundle = new Bundle();
+//            bundle.putInt("position", itemPosition);
+//            bundle.putString("name", (String) name.getText());
+//
+//            Toast.makeText(v.getContext(), "food " + name.getText() , Toast.LENGTH_LONG).show();
+//
+//            MenuFragment menuFragment =new MenuFragment();
+//            menuFragment.setArguments(bundle);
         }
     }
 }

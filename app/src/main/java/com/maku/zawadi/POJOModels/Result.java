@@ -118,6 +118,12 @@ public class Result {
         return name;
     }
 
+    @Override
+    public String toString() {
+        return name;
+    }
+
+
     /**
      *
      * @param name
@@ -189,6 +195,8 @@ public class Result {
     public Double getRating() {
         return rating;
     }
+
+
 
     /**
      *

@@ -1,6 +1,7 @@
 package com.maku.zawadi;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,7 +10,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.maku.zawadi.POJOModels.Result;
 import com.maku.zawadi.adapter.MenuAdapter;
@@ -32,6 +35,7 @@ public class MenuFragment extends Fragment {
 
     TextView mNameLabel;
     TextView mRatingLabel;
+    Button cartBtn;
 
     //Arraylist of categories
     ArrayList<String> mMenu;
@@ -70,10 +74,32 @@ public class MenuFragment extends Fragment {
 //        ButterKnife.bind(this, container);
 
         View v = inflater.inflate(R.layout.fragment_menu, container, false);
+        //getting info from bundle
+        // 1. get passed intent
+        Bundle bundle = this.getArguments();
+        assert bundle != null;
+        final String name = bundle.getString("name");
+        final String position = this.getArguments().getString("position");
 
         mNameLabel = v.findViewById(R.id.NameTextView);
         mRatingLabel = v.findViewById(R.id.ratingTextView);
         recyclerView = v.findViewById(R.id.menuRecycler);
+        cartBtn = v.findViewById(R.id.cartBtn);
+        cartBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), CartActivity.class);
+            if (intent != null)
+            {
+                intent.putExtra("name", name);
+                intent.putExtra("rname", mNameLabel.getText());
+
+                Toast.makeText(v.getContext(), "food " + name , Toast.LENGTH_LONG).show();
+
+                v.getContext().startActivity(intent);
+            }
+            }
+        });
 
         mNameLabel.setText(mResult.getName());
         mRatingLabel.setText(mResult.getRating() + "/5");
@@ -100,6 +126,8 @@ public class MenuFragment extends Fragment {
         // GoogleSignInOptions 개체 구성
 
         // Inflate the layout for this fragment
+
+
         return v;
     }
 

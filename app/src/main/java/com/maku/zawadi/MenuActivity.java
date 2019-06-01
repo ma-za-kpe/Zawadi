@@ -4,6 +4,7 @@ import android.net.Uri;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 
 import com.maku.zawadi.POJOModels.Result;
 import com.maku.zawadi.adapter.MenuPagerAdapter;
@@ -14,7 +15,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 
-public class MenuActivity extends AppCompatActivity implements MenuFragment.OnFragmentInteractionListener {
+public class MenuActivity extends AppCompatActivity implements MenuFragment.OnFragmentInteractionListener, View.OnClickListener {
 
     @BindView(R.id.viewPager)
     ViewPager mViewPager;
@@ -38,6 +39,11 @@ public class MenuActivity extends AppCompatActivity implements MenuFragment.OnFr
 
     @Override
     public void onFragmentInteraction(Uri uri) {
+
+    }
+
+    @Override
+    public void onClick(View v) {
 
     }
 }
