@@ -68,12 +68,11 @@ public class CartActivity extends AppCompatActivity {
 
     private void sendToFirebase() {
 
-        zawadi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-//                Random rnd = new Random();
-//                int n = 100000 + rnd.nextInt(900000);
+        zawadi.setOnTouchListener(new OnSwipeTouchListener(CartActivity.this) {
+            public void onSwipeTop() {
+                Toast.makeText(CartActivity.this, "top", Toast.LENGTH_SHORT).show();
+            }
+            public void onSwipeRight() {
 
                 // Generate random id, for example 283952-V8M32
                 char[] chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".toCharArray();
@@ -99,16 +98,16 @@ public class CartActivity extends AppCompatActivity {
                 value.put("timestamp", ServerValue.TIMESTAMP);
                 mMessagesDatabaseReference.child(key).child("order").setValue(value);
 
-//                List<String> list = new ArrayList<>();
-//                list.add(rname);
-//                list.add(nom);
-//                list.add(String.valueOf(phoneNumber));
-//                list.add(code);
-
-//                mMessagesDatabaseReference.push().child("order.").setValue(v);
-
                 sendSMS(phoneNumber, code);
+                Toast.makeText(CartActivity.this, "right", Toast.LENGTH_SHORT).show();
             }
+            public void onSwipeLeft() {
+                Toast.makeText(CartActivity.this, "left", Toast.LENGTH_SHORT).show();
+            }
+            public void onSwipeBottom() {
+                Toast.makeText(CartActivity.this, "bottom", Toast.LENGTH_SHORT).show();
+            }
+
         });
 
     }
