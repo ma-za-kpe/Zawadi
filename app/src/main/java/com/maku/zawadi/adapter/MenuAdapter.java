@@ -86,9 +86,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.RestaurantView
             cardView = itemView.findViewById(R.id.card_view);
             cardView.setOnClickListener(this);
 
-            //database implementation
-            mfirebaseDatabase = FirebaseDatabase.getInstance();
-            mMessagesDatabaseReference = mfirebaseDatabase.getReference().child("tempCart");
+
         }
         @Override
         public void onClick(View v) {

@@ -22,12 +22,18 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <TextView
+            android:gravity="center"
+            android:text="cappucno"
+            android:layout_gravity="center"
             android:layout_below="@+id/tvrest"
             android:id="@+id/tvprice"
             android:layout_width="230dp"
             android:layout_height="40dp" />
 
         <TextView
+            android:gravity="center"
+            android:text="50usd"
+            android:layout_gravity="center"
             android:layout_below="@+id/tvprice"
             android:id="@+id/tvname"
             android:layout_width="match_parent"
