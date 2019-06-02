@@ -31,13 +31,15 @@ import java.util.List;
 public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.RestaurantViewHolder> {
 
     private ArrayList<String> mMenu;
+    OnTextClickListener listener;
 
     //firebase instance variables
     private FirebaseDatabase mfirebaseDatabase; //connect to our db
     private DatabaseReference mMessagesDatabaseReference; //referencing specific part of db e.g messages
 
-    public MenuAdapter(ArrayList<String> mMenu) {
+    public MenuAdapter(ArrayList<String> mMenu, OnTextClickListener listener) {
         this.mMenu = mMenu;
+        this.listener = listener;
     }
 
     private SharedPreferences mSharedPreferences;
@@ -65,6 +67,10 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.RestaurantView
         return mMenu.size();
     }
 
+    public interface OnTextClickListener {
+        void onTextClick(String name, String price);
+    }
+
     public class RestaurantViewHolder extends RecyclerView.ViewHolder implements  View.OnClickListener {
 
         public TextView name;
@@ -84,33 +90,14 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.RestaurantView
             mfirebaseDatabase = FirebaseDatabase.getInstance();
             mMessagesDatabaseReference = mfirebaseDatabase.getReference().child("tempCart");
         }
-
         @Override
         public void onClick(View v) {
             int itemPosition = getLayoutPosition();
-            mMessagesDatabaseReference.push().setValue(name.getText());
-            mMessagesDatabaseReference.push().setValue(price.getText());
-            Log.w("firebase", "onClick: value "+ name.getText());
 
-//            Intent intent = new Intent(v.getContext(), MenuFragment.class);
-//            if (intent != null)
-//            {
-//                intent.putExtra("position", itemPosition);
-//                intent.putExtra("price", price.getText());
-//                intent.putExtra("name", name.getText());
-//
-//                Toast.makeText(v.getContext(), "food " + name.getText() , Toast.LENGTH_LONG).show();
-//
-//                v.getContext().startActivity(intent);
-//            }
-//            Bundle bundle = new Bundle();
-//            bundle.putInt("position", itemPosition);
-//            bundle.putString("name", (String) name.getText());
-//
-//            Toast.makeText(v.getContext(), "food " + name.getText() , Toast.LENGTH_LONG).show();
-//
-//            MenuFragment menuFragment =new MenuFragment();
-//            menuFragment.setArguments(bundle);
+            String data = (String) name.getText();
+            String data1 = (String) price.getText();
+            listener.onTextClick(data, data1);
+
         }
     }
 }

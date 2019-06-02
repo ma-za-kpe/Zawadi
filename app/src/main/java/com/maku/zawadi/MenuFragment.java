@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,11 +32,13 @@ import butterknife.ButterKnife;
  * {@link MenuFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
  */
-public class MenuFragment extends Fragment {
+public class MenuFragment extends Fragment implements MenuAdapter.OnTextClickListener {
 
     TextView mNameLabel;
     TextView mRatingLabel;
     Button cartBtn;
+
+    public String xx;
 
     //Arraylist of categories
     ArrayList<String> mMenu;
@@ -85,21 +88,7 @@ public class MenuFragment extends Fragment {
         mRatingLabel = v.findViewById(R.id.ratingTextView);
         recyclerView = v.findViewById(R.id.menuRecycler);
         cartBtn = v.findViewById(R.id.cartBtn);
-        cartBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), CartActivity.class);
-            if (intent != null)
-            {
-                intent.putExtra("name", name);
-                intent.putExtra("rname", mNameLabel.getText());
 
-                Toast.makeText(v.getContext(), "food " + name , Toast.LENGTH_LONG).show();
-
-                v.getContext().startActivity(intent);
-            }
-            }
-        });
 
         mNameLabel.setText(mResult.getName());
         mRatingLabel.setText(mResult.getRating() + "/5");
@@ -119,7 +108,7 @@ public class MenuFragment extends Fragment {
 
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(context);
-        adapter = new MenuAdapter(mMenu);
+        adapter = new MenuAdapter(mMenu, this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(layoutManager);
 
@@ -129,6 +118,30 @@ public class MenuFragment extends Fragment {
 
 
         return v;
+    }
+
+    @Override
+    public void onTextClick(final String menu, final String p) {
+        Log.d("MenuFragment", "onTextClick: " + menu + " " + p);
+
+        cartBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("MenuFraggment", "onClick: " + xx);
+                Intent intent = new Intent(v.getContext(), CartActivity.class);
+                if (intent != null)
+                {
+                    intent.putExtra("name", menu);
+                    intent.putExtra("price", p);
+                    intent.putExtra("rname", mNameLabel.getText());
+
+                    Toast.makeText(v.getContext(), "food " + menu , Toast.LENGTH_LONG).show();
+
+                    v.getContext().startActivity(intent);
+                }
+            }
+        });
+        Toast.makeText(getActivity(), "Got: " + menu, Toast.LENGTH_SHORT).show();
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -154,6 +167,8 @@ public class MenuFragment extends Fragment {
         super.onDetach();
         mListener = null;
     }
+
+
 
     /**
      * This interface must be implemented by activities that contain this

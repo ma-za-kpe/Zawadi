@@ -7,14 +7,65 @@
     tools:context=".CartActivity">
 
     <TextView
-        android:id="@+id/tvname"
+        android:id="@+id/tvrest"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="60dp"
+        android:gravity="center"
+        android:text="name"
+        android:textSize="30dp"
+        android:textColor="@color/colorPrimaryDark"/>
 
-    <TextView
-        android:layout_below="@+id/tvname"
-        android:id="@+id/tvprice"
+    <LinearLayout
+        android:id="@+id/linear"
+        android:layout_below="@+id/tvrest"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_below="@+id/tvrest"
+            android:id="@+id/tvprice"
+            android:layout_width="230dp"
+            android:layout_height="40dp" />
+
+        <TextView
+            android:layout_below="@+id/tvprice"
+            android:id="@+id/tvname"
+            android:layout_width="match_parent"
+            android:layout_height="40dp" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_marginTop="12sp"
+        android:layout_below="@+id/linear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/numberTv"
+            android:gravity="center"
+            android:textColor="@color/colorPrimaryDark"
+            android:text="ENTER PHONE NUMBER"
+            android:layout_width="match_parent"
+            android:layout_height="30dp" />
+
+        <EditText
+            android:id="@+id/numberEt"
+            android:textSize="20dp"
+            android:inputType="phone"
+            android:layout_below="@+id/numberTv"
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
+
+        <Button
+            android:id="@+id/zawadi"
+            android:textColor="#fff"
+            android:textSize="30dp"
+            android:text="ZAWADI"
+            android:background="@color/colorPrimaryDark"
+            android:layout_below="@+id/numberEt"
+            android:layout_width="match_parent"
+            android:layout_height="60dp" />
+
+    </RelativeLayout>
 
 </RelativeLayout>
