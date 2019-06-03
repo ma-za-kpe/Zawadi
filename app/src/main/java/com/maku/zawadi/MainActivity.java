@@ -295,6 +295,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         Toast.LENGTH_SHORT).show();
                 break;
             }case R.id.nav_item_three : {
+//                Intent cartIntent = new Intent(MainActivity.this, MenuActivity.class);
+//                startActivity(cartIntent);
                 Toast.makeText(MainActivity.this, "YOU HAVE SELECTED CART",
                         Toast.LENGTH_SHORT).show();
                 break;

@@ -74,6 +74,8 @@ public class CartActivity extends AppCompatActivity {
             }
             public void onSwipeRight() {
 
+                overridePendingTransition(R.anim.lefttoright, R.anim.righttoleft);
+
                 // Generate random id, for example 283952-V8M32
                 char[] chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".toCharArray();
                 Random rnd = new Random();

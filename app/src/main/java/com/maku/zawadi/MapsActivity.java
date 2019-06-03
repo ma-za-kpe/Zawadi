@@ -127,9 +127,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
          supermarket = getIntent().getExtras().getString("supermarket");
         Log.d(TAG, "onCreate: restaurant " + supermarket);
 
-//        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(mToolbar);
-
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -137,19 +134,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         String btnRestorentFindText = btnRestorentFind.getText().toString();
 
         btnRestorentFind.setText(restaurant);
-
-//        if (!btnRestorentFindText.equals(restaurant)){
-//            btnRestorentFind.setText(restaurant);
-//        } else if (!btnRestorentFindText.equals(bar)){
-//            btnRestorentFind.setText(bar);
-//        }else if (!btnRestorentFindText.equals(supermarket)){
-//            btnRestorentFind.setText(supermarket);
-//        } else {
-//            Log.d(TAG, "onCreate: clicked button is not in the list");
-//        }
-
-//        btnHospitalBar = (Button) findViewById(R.id.rest);
-        //location permissions
         getLocationPermission();
 
     }
@@ -224,7 +208,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     mLocationPermissionGranted = true;
                     //initialize the map
                     initMap();
-                }
+                }//        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(mToolbar);
             }
         }
     }
@@ -285,9 +270,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
-        Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
 
-        Log.d(TAG, "findPlaces: ..." + mLastLocation);
+       Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+        Log.d(TAG, "findPlaces: ... " + mLastLocation.getLongitude());
 
         try{
 
@@ -305,7 +290,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
             Call<Example> call = service.getNearbyPlaces(placeType, mLastLocation.getLatitude() + "," + mLastLocation.getLongitude(), PROXIMITY_RADIUS);
-
             call.enqueue(new Callback<Example>() {
                 @Override
                 public void onResponse(Call<Example> call, final Response<Example> response) {

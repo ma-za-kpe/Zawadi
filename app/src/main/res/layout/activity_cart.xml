@@ -16,10 +16,11 @@
         android:textColor="@color/colorPrimaryDark"/>
 
     <LinearLayout
+        android:gravity="center"
         android:background="@color/colorPrimary"
         android:id="@+id/linear"
         android:layout_below="@+id/tvrest"
-        android:layout_width="match_parent"
+        android:layout_width="400dp"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
