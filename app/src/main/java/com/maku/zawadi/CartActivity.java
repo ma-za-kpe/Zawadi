@@ -101,6 +101,13 @@ public class CartActivity extends AppCompatActivity {
                 mMessagesDatabaseReference.child(key).child("order").setValue(value);
 
                 sendSMS(phoneNumber, code);
+
+                //send money to the selected restaurant
+//                sendMobileMoney(rname, phonenumber)
+
+                //go to main activity
+                Intent intent = new Intent(CartActivity.this, MainActivity.class);
+                startActivity(intent);
                 Toast.makeText(CartActivity.this, "right", Toast.LENGTH_SHORT).show();
             }
             public void onSwipeLeft() {
