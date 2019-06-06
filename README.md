@@ -38,35 +38,26 @@ E-commerce apps like jumia dont offer the option of purchasing goodies like alco
 6. User clicks purchase icon to buy itm for another user.
 7. User enters phone number to purchase for another person.
 
-## SCREENSHOTS AD STEPS
+## SCREENSHOTS AND STEPS
 1. SPLASH SCREEN
 [![1.png](https://i.postimg.cc/50dh68QT/1.png)](https://postimg.cc/3y1Sq4BF)
-
 2. lOGIN PAGE
 [![2.png](https://i.postimg.cc/qvYVHPJk/2.png)](https://postimg.cc/xXKFKFN7)
-
 3.Login with google
 [![3.png](https://i.postimg.cc/CKqyhc5b/3.png)](https://postimg.cc/GBdgzJkp)
-
 4. Login with phone number
 [![4.png](https://i.postimg.cc/KvGyP7py/4.png)](https://postimg.cc/kDpZ9Sdj)
-
 5. Main page to choose viscinity
 [![5.png](https://i.postimg.cc/CxdTthVP/5.png)](https://postimg.cc/dhMxZK3r)
-
 6. Signout
 [![6.png](https://i.postimg.cc/nc3f0sN9/6.png)](https://postimg.cc/Tp5sPPdT)
-
 7. Nearby Cafes
 [![7.png](https://i.postimg.cc/j5HGNCz5/7.png)](https://postimg.cc/473LRf2k)
-
 8. Menu for the cafes
 [![8.png](https://i.postimg.cc/0j9hCxfC/8.png)](https://postimg.cc/vgSPQJC1)
-
 9. Buy for another person
 [![9.png](https://i.postimg.cc/kMFmRYcc/9.png)](https://postimg.cc/HjxKf2Fc)
-
-10. The person recies a message with a random code
+10. The person recieves a message with a random code
 [![10.png](https://i.postimg.cc/4xFZNK5R/10.png)](https://postimg.cc/NKTZdjSd)
 
 ## Testing
