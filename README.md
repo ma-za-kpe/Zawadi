@@ -14,6 +14,10 @@ E-commerce apps like jumia dont offer the option of purchasing goodies like alco
  
  ## OBJECTIVES FOR WEEK 2
  I utilized the google maps for android api, google places api, used a custom fragment to display places, and used an implicit intent.
+ 
+ ## API's
+ 1. [Google Maps For Android](https://developers.google.com/maps/documentation/android-sdk/intro)
+ 2. [Google places api For Android](https://developers.google.com/places/web-service/search)
 
 ## Technologies and frameworks used
 
