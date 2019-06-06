@@ -8,6 +8,10 @@ E-commerce apps like jumia dont offer the option of purchasing goodies like alco
 ## SOLUTION
 
  Build a solution where people can buy for others goodies, conviniently using a mobile application regardless of their location..
+ 
+ ## API's
+ 1. [Google Maps For Android](https://developers.google.com/maps/documentation/android-sdk/intro)
+ 2. [Google places api For Android](https://developers.google.com/places/web-service/search)
 
 ## Technologies and frameworks used
 
