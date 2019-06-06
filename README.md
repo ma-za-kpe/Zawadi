@@ -1,84 +1,46 @@
 # Zawadi
-Zawadi is an e-commerce android application, that enables people to buy products, food, grocery, even alcohol for other users, regardless of there location.
+added Initial project setup files plus .gitignore files
 
-## Getting Started
+## WEEK 1
 
-### Clone the Repository
+## PROBLEM STATEMENT
 
-As usual, you get started by cloning the project to your local machine:
+E-commerce apps like jumia dont offer the option of purchasing goodies like alcohol, food, and groceries for someone else.
 
-```
-$ git@github.com:ma-za-kpe/Zawadi.git
-```
-### Prerequisites
+## SOLUTION
 
-1. Add the Google library to your worksapce 
-```
-https://developers.google.com/identity/sign-in/android/sign-in
-http://robolectric.org/
-https://developer.android.com/guide/topics/ui/layout/cardview
-```
+ Build a solution where people can buy for others goodies, conviniently using a mobile application regardless of their location..
+ 
+ 
+ ## OBJECTIVES FOR WEEK 1
+ I added user interfaces to the project, used custom fonts, and used a custom readme.
 
-### Installing
+## Technologies and frameworks used
 
-#### Open and Run Project in android studio
+1. Roboelectrics for instrumentation testing.
+2. Android Studio.
+3. Gradle 4.10.
+4. Java as a main language for writing android apps.
+5. Junit 4.
+6. Espresso for local testing.
+7. Picasso as a library for processing images.
+8. okHTTP as a library for handling http requests and responses.
 
-Now that you have cloned the repo:
 
-1. open the project up in android studio.
+## Usage
+1. Clone this repo
+2. Compile "gradle compileJava"
 
-2. Go to the project and and sync dependecies in the build.gradle file.
+## USER STORIES
+1. User logs in using google signIn.
+2. User logs in using their phone number. 
+3. User views a list of category of retail categories.
+4. User clicks on category to view all the retail outlets.
+5. User clicks on retail outlet like JAVA HOUSE to select item.   .
+6. User clicks purchase icon to buy itm for another user.
+7. User enters phone number to purchase for another person.
 
-## Running the tests
+## SCREENSHOTS
 
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-## Deployment
-
-Add additional notes about how to deploy this on a live system
-
-## Built With
-
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
-
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
-
-## Authors
-
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
-## Acknowledgments
-
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
+## Testing
+roboelectric test
