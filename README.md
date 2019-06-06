@@ -1,6 +1,8 @@
 # Zawadi
 added Initial project setup files plus .gitignore files
 
+## WEEK 4
+
 ## PROBLEM STATEMENT
 
 E-commerce apps like jumia dont offer the option of purchasing goodies like alcohol, food, and groceries for someone else.
@@ -8,6 +10,10 @@ E-commerce apps like jumia dont offer the option of purchasing goodies like alco
 ## SOLUTION
 
  Build a solution where people can buy for others goodies, conviniently using a mobile application regardless of their location..
+ 
+ 
+ ## OBJECTIVES FOR WEEK 4
+ Implemented  a swipe right gesture. and added the sms feature on swipe.
 
 ## Technologies and frameworks used
 
@@ -31,14 +37,10 @@ E-commerce apps like jumia dont offer the option of purchasing goodies like alco
 3. User views a list of category of retail categories.
 4. User clicks on category to view all the retail outlets.
 5. User clicks on retail outlet like JAVA HOUSE to select item.   .
-6. User clicks purchase icon to buy itm for another user.
+6. User click
 7. User enters phone number to purchase for another person.
 
 ## SCREENSHOTS
 
 ## Testing
 roboelectric test
-espresso test
-
-## License
-[MIT](https://choosealicense.com/licenses/mit/)
